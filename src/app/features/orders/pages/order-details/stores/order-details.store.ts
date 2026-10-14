@@ -4,14 +4,14 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ActivatedRoute } from '@angular/router';
 import { catchError, distinctUntilChanged, EMPTY, interval, map, of, startWith, Subject, switchMap } from 'rxjs';
 
-import { MenuApiService } from '../../data-access/menu-api.service';
-import { OrdersApiService } from '../../data-access/orders-api.service';
-import { MenuItem } from '../../models/menu-item.model';
-import { Order, OrderStatus, OrderType } from '../../models/order.model';
-import { calculateOrderTotals, PricedOrderLine, priceOrderLines } from '../../utils/order-calculations';
-import { formatElapsed } from '../../utils/elapsed-time';
-import { orderItemCount } from '../../utils/order-board';
-import { isLateOrder, nextOrderStatus } from '../../utils/order-status';
+import { MenuApiService } from '../../../data-access/menu-api.service';
+import { OrdersApiService } from '../../../data-access/orders-api.service';
+import { MenuItem } from '../../../models/menu-item.model';
+import { Order, OrderStatus, OrderType } from '../../../models/order.model';
+import { calculateOrderTotals, PricedOrderLine, priceOrderLines } from '../../../utils/order-calculations';
+import { formatElapsed } from '../../../utils/elapsed-time';
+import { orderItemCount } from '../../../utils/order-board';
+import { isLateOrder, nextOrderStatus } from '../../../utils/order-status';
 
 const STATUS_LABEL: Record<OrderStatus, string> = {
   new: 'New',

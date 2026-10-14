@@ -1,0 +1,95 @@
+<div class="min-h-dvh bg-background text-on-surface">
+  <header
+    class="fixed top-0 left-0 z-50 w-full bg-surface-container-lowest/95 shadow-[0_1px_8px_rgba(0,0,0,0.04)] backdrop-blur-xl">
+    <div class="flex h-16 w-full items-center justify-between px-4 md:px-6">
+      <div class="flex items-center gap-6">
+        <div class="flex flex-col">
+          <span class="text-lg leading-6 font-semibold tracking-tight uppercase">Kitchen Display System</span>
+          <span class="text-xs font-medium text-on-surface-variant">Station 1 • Main Kitchen</span>
+        </div>
+        <nav class="hidden items-center lg:flex" aria-label="Primary">
+          <a class="rounded-sm px-3 py-1 text-sm font-medium hover:bg-surface-container-high"
+            routerLink="/orders">Orders Board</a>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <main class="min-h-dvh bg-background pt-16">
+    @if (store.detail()?.late) {
+    <div class="flex items-center gap-3 bg-error px-4 py-2 text-on-error md:px-6">
+      <span class="material-symbols-outlined animate-pulse text-[20px]" aria-hidden="true">timer_off</span>
+      <span class="text-lg leading-6 font-semibold tracking-tight uppercase">High Priority Delay</span>
+      <span class="hidden text-xs md:inline">• {{ store.detail()?.elapsedLabel }} (&gt; 20m threshold)</span>
+    </div>
+    }
+
+    <div class="mx-auto flex w-full max-w-7xl flex-col gap-6 px-4 py-6 md:px-6">
+      <div class="flex flex-wrap items-center gap-3">
+        <a class="inline-flex min-h-11 items-center gap-1 rounded-sm bg-surface-container px-3 py-2 text-sm font-semibold shadow-sm hover:bg-surface-container-high"
+          routerLink="/orders">
+          <span class="material-symbols-outlined text-[18px]" aria-hidden="true">arrow_back</span>
+          Back to Orders Board
+        </a>
+        @if (store.detail(); as detail) {
+        <span class="font-mono text-xs text-outline-variant" aria-hidden="true">/</span>
+        <span class="font-mono text-xs font-medium text-on-surface-variant">TICKET-{{ detail.number }}</span>
+        }
+      </div>
+
+      @if (store.actionError(); as message) {
+      <p role="alert" class="rounded-xs bg-error-container px-3 py-2 text-sm text-on-error-container">{{ message }}</p>
+      }
+
+      @if (store.loading()) {
+      <div role="status" aria-label="Loading order" class="flex flex-col gap-4">
+        <div class="h-40 animate-pulse rounded-lg bg-surface-container-low"></div>
+        <div class="grid grid-cols-1 gap-4 lg:grid-cols-3">
+          <div class="h-80 animate-pulse rounded-lg bg-surface-container-low lg:col-span-2"></div>
+          <div class="h-80 animate-pulse rounded-lg bg-surface-container-low"></div>
+        </div>
+        <span class="sr-only">Loading order…</span>
+      </div>
+      } @else if (store.notFound()) {
+      <section
+        class="my-4 flex flex-col items-center rounded-lg bg-surface-container-lowest px-6 py-24 text-center shadow-md"
+        role="status">
+        <div class="mb-4 grid size-20 place-items-center rounded-full bg-error-container text-error shadow-sm">
+          <span class="material-symbols-outlined text-[44px]" aria-hidden="true">search_off</span>
+        </div>
+        <h1 class="text-[2rem] leading-10 font-bold tracking-tight">Order Not Found</h1>
+        <p class="mt-1 max-w-md text-base text-on-surface-variant">
+          No order found with ID #{{ store.requestedId() }}. It may have been deleted or the link is invalid.
+        </p>
+        <a class="mt-6 inline-flex min-h-11 items-center gap-2 rounded-sm bg-primary px-6 py-2 text-lg leading-6 font-semibold text-on-primary shadow-md hover:bg-primary-container"
+          routerLink="/orders">
+          <span class="material-symbols-outlined text-[18px]" aria-hidden="true">arrow_back</span>
+          Return to Orders Board
+        </a>
+      </section>
+      } @else if (store.loadError(); as message) {
+      <section class="my-4 flex flex-col items-center rounded-lg bg-surface-container-low px-6 py-24 text-center"
+        role="alert">
+        <div class="mb-4 grid size-16 place-items-center rounded-full bg-error-container text-error">
+          <span class="material-symbols-outlined text-[36px]" aria-hidden="true">sync_problem</span>
+        </div>
+        <h1 class="text-2xl leading-8 font-bold">Connection Interrupted</h1>
+        <p class="mt-1 max-w-md text-sm text-on-surface-variant">{{ message }}</p>
+        <button type="button"
+          class="mt-6 inline-flex min-h-11 items-center gap-2 rounded-xs bg-error px-5 py-2.5 text-sm font-semibold text-on-error shadow-sm hover:opacity-90"
+          (click)="store.retry()">
+          <span class="material-symbols-outlined text-[20px]" aria-hidden="true">refresh</span>
+          Retry Connection
+        </button>
+      </section>
+      } @else if (store.detail(); as detail) {
+      <app-order-overview [detail]="detail" [advancing]="store.advancing()" (advance)="store.advance()" />
+
+      <div class="grid grid-cols-1 items-start gap-6 lg:grid-cols-3">
+        <app-order-items [lines]="detail.lines" [lineCount]="detail.lineCount" />
+        <app-order-financial-summary [totals]="detail.totals" />
+      </div>
+      }
+    </div>
+  </main>
+</div>

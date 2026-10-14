@@ -1,17 +1,31 @@
-import { Component, inject } from '@angular/core';
-import { RouterLink } from '@angular/router';
+import { Component, input, output } from '@angular/core';
 
-import { OrderStatus } from '../../models/order.model';
-import { OrderDetailsStore } from './order-details.store';
+import { OrderStatus } from '../../../../models/order.model';
+import { OrderDetailsView } from '../../stores/order-details.store';
+
+export type OrderOverviewDetail = Pick<
+  OrderDetailsView,
+  | 'number'
+  | 'status'
+  | 'statusLabel'
+  | 'late'
+  | 'elapsedLabel'
+  | 'actionLabel'
+  | 'typeIcon'
+  | 'typeLabel'
+  | 'tableLabel'
+  | 'createdLabel'
+>;
 
 @Component({
-  selector: 'app-order-details',
-  imports: [RouterLink],
-  providers: [OrderDetailsStore],
-  templateUrl: './order-details.component.html',
+  selector: 'app-order-overview',
+  host: { class: 'contents' },
+  templateUrl: './order-overview.component.html',
 })
-export class OrderDetailsComponent {
-  protected readonly store = inject(OrderDetailsStore);
+export class OrderOverviewComponent {
+  readonly detail = input.required<OrderOverviewDetail>();
+  readonly advancing = input.required<boolean>();
+  readonly advance = output<void>();
 
   protected statusBadge(status: OrderStatus): string {
     const tone = {

@@ -14,6 +14,6 @@ export const ordersRoutes: Routes = [
   {
     path: ':id',
     loadComponent: () =>
-      import('./pages/order-details/order-details.component').then((module) => module.OrderDetailsComponent),
+      import('./pages/order-details/pages/order-details.component').then((module) => module.OrderDetailsComponent),
   },
 ];

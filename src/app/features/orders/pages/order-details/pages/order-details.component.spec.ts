@@ -3,13 +3,13 @@ import { provideRouter, ActivatedRoute, convertToParamMap } from '@angular/route
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { BehaviorSubject, of, Subject, throwError } from 'rxjs';
 
-import { MenuApiService } from '../../data-access/menu-api.service';
-import { OrdersApiService } from '../../data-access/orders-api.service';
-import { MenuItem } from '../../models/menu-item.model';
-import { Order } from '../../models/order.model';
-import { LATE_AFTER_MS } from '../../utils/order-status';
+import { MenuApiService } from '../../../data-access/menu-api.service';
+import { OrdersApiService } from '../../../data-access/orders-api.service';
+import { MenuItem } from '../../../models/menu-item.model';
+import { Order } from '../../../models/order.model';
+import { LATE_AFTER_MS } from '../../../utils/order-status';
 import { OrderDetailsComponent } from './order-details.component';
-import { OrderDetailsStore } from './order-details.store';
+import { OrderDetailsStore } from '../stores/order-details.store';
 
 const menu: MenuItem[] = [
   { id: 'm2', name: 'Chicken Shawarma Plate', category: 'Mains', price: 165 },
