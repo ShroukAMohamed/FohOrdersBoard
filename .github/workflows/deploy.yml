@@ -1,0 +1,40 @@
+name: Deploy Angular App to GitHub Pages
+
+on:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: write
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: 'npm'
+
+      - name: Install Dependencies
+        run: npm ci
+
+      - name: Build Angular Project
+        # The base-href must match the GitHub repository name for GitHub Pages
+        run: npx ng build --configuration production --base-href /FohOrdersBoard/
+
+      - name: Bypass Jekyll
+        run: |
+          touch ./dist/foh-orders-task/browser/.nojekyll
+          cp ./dist/foh-orders-task/browser/index.html ./dist/foh-orders-task/browser/404.html
+
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./dist/foh-orders-task/browser
