@@ -1,4 +1,4 @@
-import { Component, input, output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, input, output } from '@angular/core';
 import { ButtonDirective } from 'primeng/button';
 
 import { OrderStatus } from '../../../../models/order.model';
@@ -19,6 +19,7 @@ export type OrderOverviewDetail = Pick<
 >;
 
 @Component({
+  changeDetection: ChangeDetectionStrategy.OnPush,
   selector: 'app-order-overview',
   imports: [ButtonDirective],
   host: { class: 'contents' },

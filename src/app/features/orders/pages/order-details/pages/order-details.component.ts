@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { ButtonDirective } from 'primeng/button';
 
@@ -9,6 +9,7 @@ import { OrderOverviewComponent } from '../components/order-overview/order-overv
 import { OrderDetailsStore } from '../stores/order-details.store';
 
 @Component({
+  changeDetection: ChangeDetectionStrategy.OnPush,
   selector: 'app-order-details',
   imports: [ButtonDirective, RouterLink, OrderOverviewComponent, OrderItemsComponent, OrderFinancialSummaryComponent, OrderDetailsSkeletonComponent],
   providers: [OrderDetailsStore],

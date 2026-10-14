@@ -1,4 +1,4 @@
-import { Component, computed, DestroyRef, inject, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, DestroyRef, inject, signal } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ReactiveFormsModule } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
@@ -16,6 +16,7 @@ import { OrderTypeSectionComponent } from '../components/order-type-section/orde
 import { applyOrderType, createItemGroup, createNewOrderForm, summarizeOrder, toCreateOrderRequest } from '../forms/new-order.form';
 
 @Component({
+  changeDetection: ChangeDetectionStrategy.OnPush,
   selector: 'app-new-order',
   imports: [ButtonDirective, RouterLink, ReactiveFormsModule, OrderTypeSectionComponent, OrderItemsFormComponent, NewOrderFinancialSummaryComponent, FormSkeletonComponent],
   templateUrl: './new-order.component.html',

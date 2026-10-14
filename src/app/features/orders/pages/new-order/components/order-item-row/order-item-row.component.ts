@@ -1,4 +1,4 @@
-import { Component, computed, input, output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, input, output } from '@angular/core';
 import { FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { ButtonDirective } from 'primeng/button';
 import { Select } from 'primeng/select';
@@ -7,6 +7,7 @@ import { MenuItem } from '../../../../models/menu-item.model';
 import { NewOrderItemForm } from '../../forms/new-order.form';
 
 @Component({
+  changeDetection: ChangeDetectionStrategy.OnPush,
   selector: 'app-order-item-row',
   imports: [ButtonDirective, ReactiveFormsModule, Select],
   templateUrl: './order-item-row.component.html',

@@ -148,7 +148,7 @@ Seed orders were created on 2026-09-27, so every New and Preparing seed ticket i
 
 ## 9. Performance
 
-- **OnPush** is the default change-detection strategy in this Angular version, so views update from signals and input changes.
+- **OnPush** is the default change-detection strategy in this Angular version, and every component also sets `changeDetection: ChangeDetectionStrategy.OnPush` explicitly. Views update from signals and input changes.
 - **`computed()`** rebuilds a column or a price summary only when its inputs change.
 - **`@for` with `track`** keeps cards and item rows stable across refreshes.
 - **Lazy routes** keep the board, details, and new-order code out of the first download.

@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { ButtonDirective } from 'primeng/button';
 
 import { BoardColumnSkeletonComponent } from '../../../../../shared/components/loading-state/board-column-skeleton/board-column-skeleton.component';
@@ -6,6 +6,7 @@ import { OrderColumnComponent } from '../components/order-column/order-column.co
 import { BoardTypeFilter, OrdersBoardStore } from '../stores/orders-board.store';
 
 @Component({
+  changeDetection: ChangeDetectionStrategy.OnPush,
   selector: 'app-orders-board',
   imports: [ButtonDirective, OrderColumnComponent, BoardColumnSkeletonComponent],
   providers: [OrdersBoardStore],

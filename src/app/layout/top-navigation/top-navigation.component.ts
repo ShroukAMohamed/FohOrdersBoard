@@ -1,10 +1,11 @@
-import { Component, computed, inject, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, inject, signal } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { NavigationEnd, Router, RouterLink } from '@angular/router';
 import { ButtonDirective } from 'primeng/button';
 import { filter, map } from 'rxjs';
 
 @Component({
+  changeDetection: ChangeDetectionStrategy.OnPush,
   selector: 'app-top-navigation',
   imports: [ButtonDirective, RouterLink],
   templateUrl: './top-navigation.component.html',

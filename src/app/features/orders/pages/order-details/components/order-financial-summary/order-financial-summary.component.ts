@@ -1,8 +1,9 @@
-import { Component, input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, input } from '@angular/core';
 
 import { OrderDetailsTotals } from '../../stores/order-details.store';
 
 @Component({
+  changeDetection: ChangeDetectionStrategy.OnPush,
   selector: 'app-order-financial-summary',
   host: { class: 'contents' },
   templateUrl: './order-financial-summary.component.html',

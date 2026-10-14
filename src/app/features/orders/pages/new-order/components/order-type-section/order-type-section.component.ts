@@ -1,4 +1,4 @@
-import { Component, input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, input } from '@angular/core';
 import { FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { SelectButton } from 'primeng/selectbutton';
 
@@ -6,6 +6,7 @@ import { OrderType } from '../../../../models/order.model';
 import { NewOrderForm } from '../../forms/new-order.form';
 
 @Component({
+  changeDetection: ChangeDetectionStrategy.OnPush,
   selector: 'app-order-type-section',
   imports: [ReactiveFormsModule, SelectButton],
   templateUrl: './order-type-section.component.html',

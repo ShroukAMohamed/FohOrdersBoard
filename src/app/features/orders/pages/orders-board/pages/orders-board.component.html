@@ -11,20 +11,12 @@
           <label class="relative min-w-70 lg:min-w-85">
             <span class="sr-only">Search by order or table number</span>
             <span
-              class="material-symbols-outlined pointer-events-none absolute top-1/2 left-3 -translate-y-1/2 text-[20px] text-on-surface-variant"
+              class="material-symbols-outlined pointer-events-none absolute top-1/2 left-3 -translate-y-1/2 text-[1.25rem] text-on-surface-variant"
               aria-hidden="true">search</span>
             <input type="search"
-              class="h-10 w-full rounded-xs border border-outline-variant/30 bg-surface-container-low pr-10 pl-10 text-sm text-on-surface outline-none placeholder:text-outline focus:bg-surface-container-lowest focus:ring-2 focus:ring-primary-container"
+              class="h-10 w-full rounded-xs border border-outline-variant/30 bg-surface-container-low ps-10 pe-5 text-sm text-on-surface outline-none placeholder:text-outline focus:bg-surface-container-lowest focus:ring-2 focus:ring-primary-container"
               placeholder="Search by order or table number..." [value]="store.searchDraft()"
               (input)="onSearch($event)" />
-            @if (store.searchDraft()) {
-            <button pButton type="button" aria-label="Clear search" [pButton]="{
-                iconOnly: true,
-                styleClass: '!absolute !top-1/2 !right-1 !grid !size-8 !-translate-y-1/2 !place-items-center !rounded-xs !border-0 !bg-transparent !p-0 !text-on-surface-variant !shadow-none hover:!bg-transparent hover:!text-on-surface'
-              }" (click)="store.clearSearch()">
-              <span class="material-symbols-outlined text-[18px]" aria-hidden="true">close</span>
-            </button>
-            }
           </label>
           <div
             class="flex items-center gap-0.5 rounded-xs border border-outline-variant/30 bg-surface-container-low p-0.5"

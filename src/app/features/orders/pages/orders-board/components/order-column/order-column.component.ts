@@ -1,9 +1,10 @@
-import { Component, input, output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, input, output } from '@angular/core';
 
 import { OrderColumnModel } from '../../stores/orders-board.store';
 import { OrderCardComponent } from '../order-card/order-card.component';
 
 @Component({
+  changeDetection: ChangeDetectionStrategy.OnPush,
   selector: 'app-order-column',
   imports: [OrderCardComponent],
   templateUrl: './order-column.component.html',

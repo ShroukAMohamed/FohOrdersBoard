@@ -4,7 +4,7 @@
     <div class="flex min-w-0 items-center gap-3 md:gap-6">
       <button pButton type="button" [pButton]="{
           iconOnly: true,
-          styleClass: '!grid !size-11 place-items-center! !border-0 bg-transparent! p-0! text-on-surface-variant! shadow-none! hover:bg-transparent! hover:text-on-surface! md:hidden!'
+          styleClass: '!inline-flex !size-11 !items-center !justify-center !border-0 bg-transparent! p-0! text-on-surface-variant! shadow-none! after:!hidden hover:bg-transparent! hover:text-on-surface! md:hidden!'
         }" [attr.aria-label]="menuOpen() ? 'Close menu' : 'Open menu'" [attr.aria-expanded]="menuOpen()"
         aria-controls="primary-menu" (click)="toggleMenu()">
         <span class="material-symbols-outlined text-[24px]" aria-hidden="true">{{ menuOpen() ? 'close' : 'menu'
