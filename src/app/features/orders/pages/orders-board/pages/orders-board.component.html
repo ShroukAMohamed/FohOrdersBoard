@@ -1,74 +1,40 @@
-<div class="min-h-dvh bg-background text-on-surface">
-  <header class="fixed top-0 left-0 z-50 w-full border-b border-outline-variant/30 bg-surface-container-lowest/95 shadow-[0_1px_8px_rgba(0,0,0,0.04)] backdrop-blur-xl">
-    <div class="flex h-16 w-full items-center justify-between px-6">
-      <div class="flex items-center gap-4">
-        <div class="flex items-center gap-2">
-          <span class="material-symbols-outlined text-[24px] text-primary" aria-hidden="true">restaurant</span>
-          <span class="text-lg leading-6 font-bold tracking-tight">Kitchen Display System</span>
-        </div>
-        <nav class="hidden items-center gap-2 pl-3 md:flex" aria-label="Primary">
-          <a
-            class="rounded-[0.125rem] bg-primary-container px-3 py-1 text-sm font-semibold text-on-primary-container"
-            routerLink="/orders"
-            aria-current="page"
-          >
-            Orders Board
-          </a>
-        </nav>
-      </div>
-      @if (!store.loading() && !store.loadError() && !store.hasAnyOrders()) {
-        <p class="flex items-center gap-2 font-mono text-xs font-medium text-on-surface-variant">
-          <span class="size-2 animate-pulse rounded-full bg-secondary" aria-hidden="true"></span>
-          Station 1 • Main Kitchen
-        </p>
-      }
-    </div>
-  </header>
-
-  <main class="flex min-h-dvh flex-col bg-background pt-16">
+<div class="bg-background text-on-surface">
+  <main class="flex min-h-full flex-col bg-background">
     <div class="w-full border-b border-outline-variant/30 bg-surface-container-lowest px-6 py-4">
       <div class="flex flex-col justify-between gap-3 lg:flex-row lg:items-center">
         <div>
           <h1 class="text-2xl leading-8 font-bold tracking-tight">Orders Board</h1>
-          <p class="mt-0.5 text-sm text-on-surface-variant">Manage active ticket flow across kitchen preparation stages</p>
+          <p class="mt-0.5 text-sm text-on-surface-variant">Manage active ticket flow across kitchen preparation stages
+          </p>
         </div>
         <div class="flex flex-wrap items-center gap-4">
           <label class="relative min-w-[280px] lg:min-w-[340px]">
-            <span class="sr-only">Search by order number or table number</span>
-            <span class="material-symbols-outlined pointer-events-none absolute top-1/2 left-3 -translate-y-1/2 text-[20px] text-on-surface-variant" aria-hidden="true">search</span>
-            <input
-              type="search"
+            <span class="sr-only">Search by order number</span>
+            <span
+              class="material-symbols-outlined pointer-events-none absolute top-1/2 left-3 -translate-y-1/2 text-[20px] text-on-surface-variant"
+              aria-hidden="true">search</span>
+            <input type="search"
               class="h-10 w-full rounded-[0.125rem] border border-outline-variant/30 bg-surface-container-low pr-10 pl-10 text-sm text-on-surface outline-none placeholder:text-outline focus:bg-surface-container-lowest focus:ring-2 focus:ring-primary-container"
-              placeholder="Search by order # or table #..."
-              [value]="store.searchDraft()"
-              (input)="onSearch($event)"
-            />
+              placeholder="Search by order number..." [value]="store.searchDraft()" (input)="onSearch($event)" />
             @if (store.searchDraft()) {
-              <button
-                type="button"
-                class="absolute top-1/2 right-2.5 -translate-y-1/2 text-on-surface-variant hover:text-on-surface"
-                aria-label="Clear search"
-                (click)="store.clearSearch()"
-              >
-                <span class="material-symbols-outlined text-[18px]" aria-hidden="true">close</span>
-              </button>
+            <button type="button"
+              class="absolute top-1/2 right-2.5 -translate-y-1/2 text-on-surface-variant hover:text-on-surface"
+              aria-label="Clear search" (click)="store.clearSearch()">
+              <span class="material-symbols-outlined text-[18px]" aria-hidden="true">close</span>
+            </button>
             }
           </label>
-          <div class="flex items-center gap-0.5 rounded-[0.125rem] border border-outline-variant/30 bg-surface-container-low p-0.5" role="group" aria-label="Filter by order type">
+          <div
+            class="flex items-center gap-0.5 rounded-[0.125rem] border border-outline-variant/30 bg-surface-container-low p-0.5"
+            role="group" aria-label="Filter by order type">
             @for (filter of typeFilters; track filter.id) {
-              <button
-                type="button"
-                class="rounded-[0.125rem] px-3 py-1.5 text-sm font-semibold transition"
-                [class]="
+            <button type="button" class="rounded-[0.125rem] px-3 py-1.5 text-sm font-semibold transition" [class]="
                   store.typeFilter() === filter.id
                     ? 'bg-surface-container-lowest text-on-surface shadow-sm'
                     : 'text-on-surface-variant hover:text-on-surface'
-                "
-                [attr.aria-pressed]="store.typeFilter() === filter.id"
-                (click)="store.setType(filter.id)"
-              >
-                {{ filter.label }}
-              </button>
+                " [attr.aria-pressed]="store.typeFilter() === filter.id" (click)="store.setType(filter.id)">
+              {{ filter.label }}
+            </button>
             }
           </div>
         </div>
@@ -77,109 +43,124 @@
 
     <div class="flex flex-1 flex-col p-6">
       @if (store.actionError(); as message) {
-        <p role="alert" class="mb-4 rounded-[0.125rem] bg-error-container px-3 py-2 text-sm text-on-error-container">{{ message }}</p>
+      <p role="alert" class="mb-4 rounded-[0.125rem] bg-error-container px-3 py-2 text-sm text-on-error-container">{{
+        message }}</p>
       }
       @if (store.refreshWarning(); as message) {
-        <p role="status" class="mb-4 rounded-[0.125rem] bg-tertiary-fixed px-3 py-2 text-sm text-on-tertiary-fixed">{{ message }}</p>
+      <p role="status" class="mb-4 rounded-[0.125rem] bg-tertiary-fixed px-3 py-2 text-sm text-on-tertiary-fixed">{{
+        message }}</p>
       }
 
       @if (store.loading()) {
-        <div class="grid grid-cols-1 items-start gap-4 md:grid-cols-2 lg:grid-cols-4" role="status" aria-label="Loading orders">
-          @for (column of skeletonColumns; track column) {
-            <div class="flex min-h-[500px] flex-col rounded-[0.25rem] bg-surface-container-low p-2">
-              <div class="mb-3 h-10 animate-pulse rounded-[0.125rem] bg-surface-container-high"></div>
-              <div class="flex flex-col gap-3">
-                <div class="h-36 animate-pulse rounded-[0.125rem] bg-surface-container-lowest"></div>
-                <div class="h-36 animate-pulse rounded-[0.125rem] bg-surface-container-lowest"></div>
-              </div>
-            </div>
-          }
-          <span class="sr-only">Loading orders…</span>
+      <div class="grid grid-cols-1 items-start gap-4 md:grid-cols-2 lg:grid-cols-4" role="status"
+        aria-label="Loading orders">
+        @for (column of skeletonColumns; track column) {
+        <div class="flex min-h-[500px] flex-col rounded-[0.25rem] bg-surface-container-low p-2">
+          <div class="mb-3 h-10 animate-pulse rounded-[0.125rem] bg-surface-container-high"></div>
+          <div class="flex flex-col gap-3">
+            <div class="h-36 animate-pulse rounded-[0.125rem] bg-surface-container-lowest"></div>
+            <div class="h-36 animate-pulse rounded-[0.125rem] bg-surface-container-lowest"></div>
+          </div>
         </div>
+        }
+        <span class="sr-only">Loading orders…</span>
+      </div>
       } @else if (store.loadError(); as message) {
-        <section role="alert" class="flex min-h-[440px] w-full flex-col items-center justify-center rounded-[0.5rem] bg-surface-container-low p-6 text-center">
-          <div class="mb-4 grid size-16 place-items-center rounded-full bg-error-container text-error">
-            <span class="material-symbols-outlined text-[36px]" aria-hidden="true">sync_problem</span>
-          </div>
-          <h2 class="text-2xl leading-8 font-bold">Connection Interrupted</h2>
-          <p class="mt-1 max-w-md text-sm text-on-surface-variant">{{ message }}</p>
-          <button
-            type="button"
-            class="mt-6 flex items-center gap-2 rounded-[0.125rem] bg-error px-5 py-2.5 text-sm font-semibold text-on-error shadow-sm hover:opacity-90"
-            (click)="store.load()"
-          >
-            <span class="material-symbols-outlined text-[20px]" aria-hidden="true">refresh</span>
-            Retry Connection
-          </button>
-        </section>
-      } @else if (!store.hasAnyOrders()) {
-        <div class="flex flex-col gap-4">
-          <section class="flex flex-col items-center justify-between gap-4 rounded-[0.5rem] border border-outline-variant/30 bg-surface-container-lowest p-4 shadow-sm sm:flex-row">
-            <div class="flex flex-col items-center gap-4 text-center sm:flex-row sm:text-left">
-              <div class="grid size-12 shrink-0 place-items-center rounded-full bg-secondary-container text-on-secondary-container">
-                <span class="material-symbols-outlined text-[28px]" aria-hidden="true">check_circle</span>
-              </div>
-              <div>
-                <h2 class="text-lg leading-6 font-bold">All Caught Up! No Active Orders</h2>
-                <p class="mt-0.5 text-sm text-on-surface-variant">
-                  There are currently no orders in the queue. New orders from Dine-in, Takeaway, or Delivery will appear here in real-time.
-                </p>
-              </div>
-            </div>
-            <p class="flex shrink-0 items-center gap-2 rounded-full border border-outline-variant/30 bg-surface-container-low px-3 py-1.5 text-xs text-on-surface-variant">
-              <span class="size-2 animate-pulse rounded-full bg-primary" aria-hidden="true"></span>
-              Listening for incoming orders...
-            </p>
-          </section>
-          <div class="grid grid-cols-1 items-start gap-4 md:grid-cols-2 lg:grid-cols-4">
-            @for (column of store.columns(); track column.status) {
-              <app-order-column [column]="column" />
-            }
-          </div>
+      <section role="alert"
+        class="flex min-h-[440px] w-full flex-col items-center justify-center rounded-[0.5rem] bg-surface-container-low p-6 text-center">
+        <div class="mb-4 grid size-16 place-items-center rounded-full bg-error-container text-error">
+          <span class="material-symbols-outlined text-[36px]" aria-hidden="true">sync_problem</span>
         </div>
-      } @else if (store.visibleCount() === 0) {
-        <section class="flex min-h-[440px] w-full flex-col items-center justify-center rounded-[0.5rem] bg-surface-container-low p-6 text-center">
-          <div class="mb-4 grid size-16 place-items-center rounded-full bg-surface-container-highest text-on-surface-variant">
-            <span class="material-symbols-outlined text-[36px]" aria-hidden="true">search_off</span>
+        <h2 class="text-2xl leading-8 font-bold">Connection Interrupted</h2>
+        <p class="mt-1 max-w-md text-sm text-on-surface-variant">{{ message }}</p>
+        <button type="button"
+          class="mt-6 flex items-center gap-2 rounded-[0.125rem] bg-error px-5 py-2.5 text-sm font-semibold text-on-error shadow-sm hover:opacity-90"
+          (click)="store.load()">
+          <span class="material-symbols-outlined text-[20px]" aria-hidden="true">refresh</span>
+          Retry Connection
+        </button>
+      </section>
+      } @else if (!store.hasAnyOrders()) {
+      <div class="flex flex-col gap-4">
+        <section
+          class="flex flex-col items-center justify-between gap-4 rounded-[0.5rem] border border-outline-variant/30 bg-surface-container-lowest p-4 shadow-sm sm:flex-row">
+          <div class="flex flex-col items-center gap-4 text-center sm:flex-row sm:text-left">
+            <div
+              class="grid size-12 shrink-0 place-items-center rounded-full bg-secondary-container text-on-secondary-container">
+              <span class="material-symbols-outlined text-[28px]" aria-hidden="true">check_circle</span>
+            </div>
+            <div>
+              <h2 class="text-lg leading-6 font-bold">All Caught Up! No Active Orders</h2>
+              <p class="mt-0.5 text-sm text-on-surface-variant">
+                There are currently no orders in the queue. New orders from Dine-in, Takeaway, or Delivery will appear
+                here in real-time.
+              </p>
+            </div>
           </div>
-          <h2 class="text-2xl leading-8 font-bold">No orders found</h2>
-          <p class="mt-1 text-sm text-on-surface-variant">
-            No orders found matching '<span class="font-mono font-semibold text-on-surface">{{ store.appliedSearch() || store.typeFilter() }}</span>'.
+          <p
+            class="flex shrink-0 items-center gap-2 rounded-full border border-outline-variant/30 bg-surface-container-low px-3 py-1.5 text-xs text-on-surface-variant">
+            <span class="size-2 animate-pulse rounded-full bg-primary" aria-hidden="true"></span>
+            Listening for incoming orders...
           </p>
-          <div class="mt-4 flex flex-wrap justify-center gap-2">
-            @if (store.appliedSearch()) {
-              <button type="button" class="rounded-[0.125rem] bg-surface-container-highest px-4 py-2 text-sm font-semibold hover:bg-surface-variant" (click)="store.clearSearch()">
-                Clear search query
-              </button>
-            }
-            @if (store.typeFilter() !== 'all') {
-              <button type="button" class="rounded-[0.125rem] bg-surface-container-highest px-4 py-2 text-sm font-semibold hover:bg-surface-variant" (click)="store.setType('all')">
-                Show all types
-              </button>
-            }
-          </div>
         </section>
-      } @else {
         <div class="grid grid-cols-1 items-start gap-4 md:grid-cols-2 lg:grid-cols-4">
           @for (column of store.columns(); track column.status) {
-            <app-order-column [column]="column" (advance)="store.advance($event)" />
+          <app-order-column [column]="column" />
           }
         </div>
+      </div>
+      } @else if (store.visibleCount() === 0) {
+      <section
+        class="flex min-h-[440px] w-full flex-col items-center justify-center rounded-[0.5rem] bg-surface-container-low p-6 text-center">
+        <div
+          class="mb-4 grid size-16 place-items-center rounded-full bg-surface-container-highest text-on-surface-variant">
+          <span class="material-symbols-outlined text-[36px]" aria-hidden="true">search_off</span>
+        </div>
+        <h2 class="text-2xl leading-8 font-bold">No orders found</h2>
+        <p class="mt-1 text-sm text-on-surface-variant">
+          No orders found matching '<span class="font-mono font-semibold text-on-surface">{{ store.appliedSearch() ||
+            store.typeFilter() }}</span>'.
+        </p>
+        <div class="mt-4 flex flex-wrap justify-center gap-2">
+          @if (store.appliedSearch()) {
+          <button type="button"
+            class="rounded-[0.125rem] bg-surface-container-highest px-4 py-2 text-sm font-semibold hover:bg-surface-variant"
+            (click)="store.clearSearch()">
+            Clear search query
+          </button>
+          }
+          @if (store.typeFilter() !== 'all') {
+          <button type="button"
+            class="rounded-[0.125rem] bg-surface-container-highest px-4 py-2 text-sm font-semibold hover:bg-surface-variant"
+            (click)="store.setType('all')">
+            Show all types
+          </button>
+          }
+        </div>
+      </section>
+      } @else {
+      <div class="grid grid-cols-1 items-start gap-4 md:grid-cols-2 lg:grid-cols-4">
+        @for (column of store.columns(); track column.status) {
+        <app-order-column [column]="column" (advance)="store.advance($event)" />
+        }
+      </div>
       }
     </div>
 
     @if (!store.loading() && !store.loadError()) {
-      <footer class="mt-auto flex w-full flex-wrap items-center justify-between gap-3 border-t border-outline-variant/30 bg-surface-container-low px-6 py-3 text-xs text-on-surface-variant">
-        <p class="flex items-center gap-4">
-          <span class="flex items-center gap-1.5 font-medium">
-            <span class="size-2 rounded-full" [class]="store.visibleCount() > 0 ? 'bg-secondary' : 'bg-outline'" aria-hidden="true"></span>
-            {{ store.visibleCount() }} Active Orders
-          </span>
-          <span class="text-outline" aria-hidden="true">•</span>
-          <span>Average Prep: <strong class="font-semibold text-on-surface">--</strong></span>
-        </p>
-        <p class="font-mono text-xs text-outline">Station 1 • Main Kitchen</p>
-      </footer>
+    <footer
+      class="mt-auto flex w-full flex-wrap items-center justify-between gap-3 border-t border-outline-variant/30 bg-surface-container-low px-6 py-3 text-xs text-on-surface-variant">
+      <p class="flex items-center gap-4">
+        <span class="flex items-center gap-1.5 font-medium">
+          <span class="size-2 rounded-full" [class]="store.visibleCount() > 0 ? 'bg-secondary' : 'bg-outline'"
+            aria-hidden="true"></span>
+          {{ store.visibleCount() }} Active Orders
+        </span>
+        <span class="text-outline" aria-hidden="true">•</span>
+        <span>Average Prep: <strong class="font-semibold text-on-surface">--</strong></span>
+      </p>
+      <p class="font-mono text-xs text-outline">Station 1 • Main Kitchen</p>
+    </footer>
     }
   </main>
 </div>

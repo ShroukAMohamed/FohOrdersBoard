@@ -3,11 +3,18 @@ import { Routes } from '@angular/router';
 export const routes: Routes = [
   {
     path: '',
-    pathMatch: 'full',
-    redirectTo: 'orders',
-  },
-  {
-    path: 'orders',
-    loadChildren: () => import('./features/orders/orders.routes').then((module) => module.ordersRoutes),
+    loadComponent: () => import('./layout/app-shell/app-shell.component').then((module) => module.AppShellComponent),
+    children: [
+      {
+        path: '',
+        pathMatch: 'full',
+        redirectTo: 'orders',
+      },
+      {
+        path: 'orders',
+        loadChildren: () =>
+          import('./features/orders/orders-routing.module').then((module) => module.OrdersRoutingModule),
+      },
+    ],
   },
 ];

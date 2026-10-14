@@ -1,12 +1,11 @@
 import { Component, inject } from '@angular/core';
-import { RouterLink } from '@angular/router';
 
 import { OrderColumnComponent } from '../components/order-column/order-column.component';
 import { BoardTypeFilter, OrdersBoardStore } from '../stores/orders-board.store';
 
 @Component({
   selector: 'app-orders-board',
-  imports: [OrderColumnComponent, RouterLink],
+  imports: [OrderColumnComponent],
   providers: [OrdersBoardStore],
   templateUrl: './orders-board.component.html',
 })

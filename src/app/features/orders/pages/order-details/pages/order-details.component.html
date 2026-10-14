@@ -1,21 +1,5 @@
-<div class="min-h-dvh bg-background text-on-surface">
-  <header
-    class="fixed top-0 left-0 z-50 w-full bg-surface-container-lowest/95 shadow-[0_1px_8px_rgba(0,0,0,0.04)] backdrop-blur-xl">
-    <div class="flex h-16 w-full items-center justify-between px-4 md:px-6">
-      <div class="flex items-center gap-6">
-        <div class="flex flex-col">
-          <span class="text-lg leading-6 font-semibold tracking-tight uppercase">Kitchen Display System</span>
-          <span class="text-xs font-medium text-on-surface-variant">Station 1 • Main Kitchen</span>
-        </div>
-        <nav class="hidden items-center lg:flex" aria-label="Primary">
-          <a class="rounded-sm px-3 py-1 text-sm font-medium hover:bg-surface-container-high"
-            routerLink="/orders">Orders Board</a>
-        </nav>
-      </div>
-    </div>
-  </header>
-
-  <main class="min-h-dvh bg-background pt-16">
+<div class="bg-background text-on-surface">
+  <main>
     @if (store.detail()?.late) {
     <div class="flex items-center gap-3 bg-error px-4 py-2 text-on-error md:px-6">
       <span class="material-symbols-outlined animate-pulse text-[20px]" aria-hidden="true">timer_off</span>

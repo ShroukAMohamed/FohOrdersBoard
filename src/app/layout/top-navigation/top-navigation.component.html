@@ -1,0 +1,52 @@
+<header
+  class="relative shrink-0 border-b border-outline-variant/30 bg-surface-container-lowest/95 shadow-[0_1px_8px_rgba(0,0,0,0.04)] backdrop-blur-xl z-50">
+  <div class="flex h-16 items-center justify-between gap-3 px-4 md:px-6">
+    <div class="flex min-w-0 items-center gap-3 md:gap-6">
+      <button type="button"
+        class="grid size-11 place-items-center text-on-surface-variant hover:text-on-surface md:hidden"
+        [attr.aria-expanded]="menuOpen()" aria-controls="primary-menu"
+        [attr.aria-label]="menuOpen() ? 'Close menu' : 'Open menu'" (click)="toggleMenu()">
+        <span class="material-symbols-outlined text-[24px]" aria-hidden="true">{{ menuOpen() ? 'close' : 'menu'
+          }}</span>
+      </button>
+
+      <div class="flex min-w-0 items-center gap-2">
+        <span class="material-symbols-outlined shrink-0 text-[24px] text-primary" aria-hidden="true">restaurant</span>
+        <span class="truncate text-lg leading-6 font-bold tracking-tight">Kitchen Display System</span>
+      </div>
+
+      <nav class="hidden items-center gap-6 md:flex" aria-label="Primary">
+        <a routerLink="/orders" [class]="linkClass(ordersActive())"
+          [attr.aria-current]="ordersActive() ? 'page' : null">
+          Orders Board
+        </a>
+        <a routerLink="/orders/new" [class]="linkClass(newOrderActive())"
+          [attr.aria-current]="newOrderActive() ? 'page' : null">
+          New Order
+        </a>
+      </nav>
+    </div>
+
+    <p class="hidden items-center gap-2 font-mono text-xs font-medium text-on-surface-variant sm:flex">
+      <span class="size-2 rounded-full bg-secondary" aria-hidden="true"></span>
+      Station 1 • Main Kitchen
+    </p>
+  </div>
+
+  @if (menuOpen()) {
+  <nav id="primary-menu"
+    class="absolute top-full right-0 left-0 z-50 flex flex-col border-b border-outline-variant/30 bg-surface-container-lowest shadow-md md:hidden"
+    aria-label="Primary">
+    <a routerLink="/orders" [class]="mobileLinkClass(ordersActive())"
+      [attr.aria-current]="ordersActive() ? 'page' : null" (click)="closeMenu()">
+      <span class="material-symbols-outlined text-[20px]" aria-hidden="true">view_kanban</span>
+      Orders Board
+    </a>
+    <a routerLink="/orders/new" [class]="mobileLinkClass(newOrderActive())"
+      [attr.aria-current]="newOrderActive() ? 'page' : null" (click)="closeMenu()">
+      <span class="material-symbols-outlined text-[20px]" aria-hidden="true">add</span>
+      New Order
+    </a>
+  </nav>
+  }
+</header>

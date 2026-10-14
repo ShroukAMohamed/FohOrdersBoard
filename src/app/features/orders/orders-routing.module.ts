@@ -1,6 +1,7 @@
-import { Routes } from '@angular/router';
+import { NgModule } from '@angular/core';
+import { RouterModule, Routes } from '@angular/router';
 
-export const ordersRoutes: Routes = [
+const routes: Routes = [
   {
     path: '',
     loadComponent: () =>
@@ -17,3 +18,9 @@ export const ordersRoutes: Routes = [
       import('./pages/order-details/pages/order-details.component').then((module) => module.OrderDetailsComponent),
   },
 ];
+
+@NgModule({
+  imports: [RouterModule.forChild(routes)],
+  exports: [RouterModule],
+})
+export class OrdersRoutingModule {}
