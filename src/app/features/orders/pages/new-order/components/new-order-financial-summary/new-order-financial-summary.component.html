@@ -1,10 +1,13 @@
-<section class="flex flex-col gap-4 rounded-lg border border-outline-variant/30 bg-surface-container-lowest p-4 shadow-sm md:p-6" aria-labelledby="new-order-summary-heading">
+<section
+  class="flex flex-col gap-4 rounded-lg border border-outline-variant/30 bg-surface-container-lowest p-4 shadow-sm md:p-6"
+  aria-labelledby="new-order-summary-heading">
   <div class="flex items-center justify-between border-b border-outline-variant/30 pb-2">
     <div class="flex items-center gap-2">
       <span class="material-symbols-outlined text-[22px] text-primary" aria-hidden="true">receipt</span>
       <h2 id="new-order-summary-heading" class="text-lg leading-6 font-semibold">Financial Summary</h2>
     </div>
-    <span class="rounded-[0.125rem] bg-surface-container-high px-2 py-0.5 font-mono text-[11px] leading-[14px] font-bold">EGP</span>
+    <span
+      class="rounded-xs bg-surface-container-high px-2 py-0.5 font-mono text-[.6875rem] leading-3.5 font-bold">EGP</span>
   </div>
 
   <div class="flex items-center justify-between text-sm">
@@ -15,7 +18,8 @@
     <span class="flex items-center gap-1.5 text-on-surface-variant">
       Service Charge
       @if (totals().showServiceRate) {
-        <span class="rounded-[0.125rem] bg-secondary-container px-1.5 py-0.5 text-[11px] leading-[14px] font-semibold text-on-secondary-container">12%</span>
+      <span
+        class="rounded-xs bg-secondary-container px-1.5 py-0.5 text-[.6875rem] leading-3.5 font-semibold text-on-secondary-container">12%</span>
       }
     </span>
     <span class="font-mono font-semibold">{{ totals().serviceCharge }}</span>
@@ -23,7 +27,8 @@
   <div class="flex items-center justify-between text-sm">
     <span class="flex items-center gap-1.5 text-on-surface-variant">
       VAT
-      <span class="rounded-[0.125rem] bg-surface-container-high px-1.5 py-0.5 text-[11px] leading-[14px] font-semibold text-on-surface-variant">14%</span>
+      <span
+        class="rounded-xs bg-surface-container-high px-1.5 py-0.5 text-[.6875rem] leading-3.5 font-semibold text-on-surface-variant">14%</span>
     </span>
     <span class="font-mono font-semibold">{{ totals().vat }}</span>
   </div>
@@ -33,10 +38,11 @@
       <span class="text-lg leading-6 font-bold">Grand Total</span>
       <span class="text-xs text-on-surface-variant">Including VAT and service</span>
     </div>
-    <span class="text-2xl leading-8 font-bold tracking-tight text-primary" aria-live="polite">{{ totals().grandTotal }}</span>
+    <span class="text-2xl leading-8 font-bold tracking-tight text-primary" aria-live="polite">{{ totals().grandTotal
+      }}</span>
   </div>
-  <p class="flex items-center gap-2 rounded-[0.25rem] bg-surface-container p-2.5 text-xs text-on-surface-variant">
-    <span class="material-symbols-outlined shrink-0 text-[16px] text-primary" aria-hidden="true">info</span>
+  <p class="flex items-center gap-2 rounded-sm bg-surface-container p-2.5 text-xs text-on-surface-variant">
+    <span class="material-symbols-outlined shrink-0 text-[1.25em] text-primary" aria-hidden="true">info</span>
     {{ totals().serviceCaption }}
   </p>
 </section>

@@ -48,9 +48,10 @@
         </div>
         <h1 class="text-2xl leading-8 font-bold">Connection Interrupted</h1>
         <p class="mt-1 max-w-md text-sm text-on-surface-variant">{{ message }}</p>
-        <button type="button"
-          class="mt-6 inline-flex min-h-11 items-center gap-2 rounded-xs bg-error px-5 py-2.5 text-sm font-semibold text-on-error shadow-sm hover:opacity-90"
-          (click)="store.retry()">
+        <button pButton type="button" [pButton]="{
+            severity: 'danger',
+            styleClass: '!mt-6 !inline-flex !min-h-11 !items-center !gap-2 !rounded-xs !border-0 !bg-error !px-5 !py-2.5 !text-sm !font-semibold !text-on-error !shadow-sm hover:!bg-error hover:!opacity-90'
+          }" (click)="store.retry()">
           <span class="material-symbols-outlined text-[20px]" aria-hidden="true">refresh</span>
           Retry Connection
         </button>

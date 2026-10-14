@@ -67,6 +67,44 @@ html {
   top: 4.75rem !important;
 }
 
+.order-type-select .p-selectbutton {
+  display: flex;
+  width: 100%;
+  gap: 0.375rem;
+  border: 0;
+  background: transparent;
+}
+
+.order-type-select .p-togglebutton {
+  flex: 1;
+  justify-content: center;
+  min-height: 2.75rem;
+  border-width: 0;
+  border-radius: 0.25rem;
+  background: transparent;
+  color: var(--color-on-surface-variant);
+  font-weight: 600;
+}
+
+.order-type-select .p-togglebutton-content {
+  background: transparent;
+  color: inherit;
+}
+
+.order-type-select .p-togglebutton.p-togglebutton-checked {
+  background: var(--color-primary);
+  color: var(--color-on-primary);
+  box-shadow: 0 1px 2px rgb(0 0 0 / 0.06);
+}
+
+.menu-item-select.p-select {
+  align-items: center;
+  min-height: 2.75rem;
+  border-color: color-mix(in srgb, var(--color-outline-variant) 50%, transparent);
+  background: var(--color-surface-container-lowest);
+  box-shadow: 0 1px 2px rgb(0 0 0 / 0.05);
+}
+
 body {
   min-height: 100dvh;
   background-color: var(--color-canvas);

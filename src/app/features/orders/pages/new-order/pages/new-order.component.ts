@@ -2,6 +2,7 @@ import { Component, computed, DestroyRef, inject, signal } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ReactiveFormsModule } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
+import { ButtonDirective } from 'primeng/button';
 import { switchMap } from 'rxjs';
 
 import { MenuApiService } from '../../../data-access/menu-api.service';
@@ -16,7 +17,7 @@ import { applyOrderType, createItemGroup, createNewOrderForm, summarizeOrder, to
 
 @Component({
   selector: 'app-new-order',
-  imports: [RouterLink, ReactiveFormsModule, OrderTypeSectionComponent, OrderItemsFormComponent, NewOrderFinancialSummaryComponent, FormSkeletonComponent],
+  imports: [ButtonDirective, RouterLink, ReactiveFormsModule, OrderTypeSectionComponent, OrderItemsFormComponent, NewOrderFinancialSummaryComponent, FormSkeletonComponent],
   templateUrl: './new-order.component.html',
 })
 export class NewOrderComponent {

@@ -1,11 +1,12 @@
 import { Component, computed, inject, signal } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { NavigationEnd, Router, RouterLink } from '@angular/router';
+import { ButtonDirective } from 'primeng/button';
 import { filter, map } from 'rxjs';
 
 @Component({
   selector: 'app-top-navigation',
-  imports: [RouterLink],
+  imports: [ButtonDirective, RouterLink],
   templateUrl: './top-navigation.component.html',
 })
 export class TopNavigationComponent {

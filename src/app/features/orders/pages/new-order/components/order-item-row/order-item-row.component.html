@@ -1,72 +1,65 @@
-<div class="flex flex-col gap-1 rounded-lg border border-outline-variant/20 bg-surface-container-low p-3" [formGroup]="item()">
+<div class="flex flex-col gap-1 rounded-lg border border-outline-variant/20 bg-surface-container-low p-3"
+  [formGroup]="item()">
   <div class="flex flex-col items-stretch gap-3 md:flex-row md:items-start">
-  <div class="min-w-0 flex-[2]">
-    <label class="mb-1 block text-[11px] leading-[14px] font-semibold tracking-wider text-on-surface-variant uppercase" [attr.for]="menuId()">Menu Item</label>
-    <div class="relative text-sm">
-      <select
-        class="min-h-11 w-full appearance-none rounded-[0.25rem] border border-outline-variant/50 bg-surface-container-lowest py-2 pr-8 pl-3 text-sm shadow-sm outline-none focus:ring-2 focus:ring-primary"
-        [id]="menuId()"
-        formControlName="menuId"
-        [attr.aria-invalid]="showMenuError()"
-        [attr.aria-describedby]="errorId()"
-      >
-        <option value="">Select a menu item</option>
-        @for (entry of menu(); track entry.id) {
-          <option [value]="entry.id">{{ entry.name }} — EGP {{ entry.price.toFixed(2) }}</option>
-        }
-      </select>
-      <svg class="pointer-events-none absolute top-1/2 right-2 h-[1.5em] w-[1.5em] -translate-y-1/2 text-outline" viewBox="0 0 20 20" fill="none" aria-hidden="true">
-        <path d="M6 8l4 4 4-4" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" />
-      </svg>
+    <div class="min-w-0 flex-2">
+      <label
+        class="mb-1 block text-[.6875rem] leading-3.5 font-semibold tracking-wider text-on-surface-variant uppercase"
+        [attr.for]="menuId()">Menu Item</label>
+      <p-select class="menu-item-select" [inputId]="menuId()" formControlName="menuId" [options]="menuOptions()"
+        optionLabel="label" optionValue="id" placeholder="Select a menu item" [fluid]="true" [invalid]="showMenuError()"
+        appendTo="body" [attr.aria-describedby]="errorId()" />
     </div>
-  </div>
 
-  <div class="w-full shrink-0 md:w-36">
-    <label class="mb-1 block text-[11px] leading-[14px] font-semibold tracking-wider text-on-surface-variant uppercase" [attr.for]="qtyId()">Qty (1–20)</label>
-    <div class="flex min-h-11 items-center rounded-[0.25rem] border border-outline-variant/50 bg-surface-container-lowest shadow-sm">
-      <button type="button" class="grid h-11 w-11 shrink-0 place-items-center rounded-l-[0.25rem] text-on-surface-variant hover:bg-surface-container-high" aria-label="Decrease quantity" (click)="adjustQty(-1)">
-        <span class="material-symbols-outlined text-[18px]" aria-hidden="true">remove</span>
-      </button>
+    <div class="w-full shrink-0 md:w-36">
+      <label
+        class="mb-1 block text-[.6875rem] leading-3.5 font-semibold tracking-wider text-on-surface-variant uppercase"
+        [attr.for]="qtyId()">Qty (1–20)</label>
+      <div
+        class="flex min-h-11 items-center rounded-sm border border-outline-variant/50 bg-surface-container-lowest shadow-sm">
+        <button pButton type="button" aria-label="Decrease quantity" [pButton]="{
+            iconOnly: true,
+            styleClass: '!inline-flex !h-11 !w-11 !shrink-0 !items-center !justify-center !rounded-l-sm !border-0 !bg-transparent !p-0 !text-on-surface-variant !shadow-none after:!hidden hover:!bg-surface-container-high'
+          }" (click)="adjustQty(-1)">
+          <span class="material-symbols-outlined text-[1.125em]" aria-hidden="true">remove</span>
+        </button>
+        <input
+          class="w-full min-w-0 bg-transparent py-1 text-center font-mono text-sm outline-none [appearance:textfield] [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
+          type="number" min="1" max="20" step="1" [id]="qtyId()" formControlName="qty"
+          [attr.aria-invalid]="showQtyError()" [attr.aria-describedby]="errorId()" />
+        <button pButton type="button" aria-label="Increase quantity" [pButton]="{
+            iconOnly: true,
+            styleClass: '!inline-flex !h-11 !w-11 !shrink-0 !items-center !justify-center !rounded-r-sm !border-0 !bg-transparent !p-0 !text-on-surface-variant !shadow-none after:!hidden hover:!bg-surface-container-high'
+          }" (click)="adjustQty(1)">
+          <span class="material-symbols-outlined text-[1.125em]" aria-hidden="true">add</span>
+        </button>
+      </div>
+    </div>
+
+    <div class="min-w-0 flex-2">
+      <label
+        class="mb-1 block text-[.6875rem] leading-3.5 font-semibold tracking-wider text-on-surface-variant uppercase"
+        [attr.for]="noteId()">Kitchen Note</label>
       <input
-        class="w-full min-w-0 bg-transparent py-1 text-center font-mono text-sm outline-none [appearance:textfield] [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
-        type="number"
-        min="1"
-        max="20"
-        step="1"
-        [id]="qtyId()"
-        formControlName="qty"
-        [attr.aria-invalid]="showQtyError()"
-        [attr.aria-describedby]="errorId()"
-      />
-      <button type="button" class="grid h-11 w-11 shrink-0 place-items-center rounded-r-[0.25rem] text-on-surface-variant hover:bg-surface-container-high" aria-label="Increase quantity" (click)="adjustQty(1)">
-        <span class="material-symbols-outlined text-[18px]" aria-hidden="true">add</span>
+        class="min-h-11 w-full rounded-sm border border-outline-variant/50 bg-surface-container-lowest px-3 py-2 text-sm shadow-sm outline-none focus:ring-2 focus:ring-primary"
+        type="text" [id]="noteId()" formControlName="note" placeholder="e.g. Extra crispy pita, sauce on side" />
+    </div>
+
+    <div class="self-end pt-1 md:self-start md:pt-5">
+      <button pButton type="button" [attr.aria-label]="'Remove item ' + (index() + 1)" [pButton]="{
+          iconOnly: true,
+          styleClass: '!inline-flex !h-11 !w-11 !shrink-0 !items-center !justify-center !rounded-sm !border !border-outline-variant/30 !bg-surface-container !p-0 !text-on-surface-variant !shadow-none after:!hidden hover:!bg-error-container hover:!text-on-error-container'
+        }" (click)="remove.emit()">
+        <span class="material-symbols-outlined text-[1.25em]" aria-hidden="true">delete</span>
       </button>
     </div>
   </div>
-
-  <div class="min-w-0 flex-[2]">
-    <label class="mb-1 block text-[11px] leading-[14px] font-semibold tracking-wider text-on-surface-variant uppercase" [attr.for]="noteId()">Kitchen Note</label>
-    <input
-      class="min-h-11 w-full rounded-[0.25rem] border border-outline-variant/50 bg-surface-container-lowest px-3 py-2 text-sm shadow-sm outline-none focus:ring-2 focus:ring-primary"
-      type="text"
-      [id]="noteId()"
-      formControlName="note"
-      placeholder="e.g. Extra crispy pita, sauce on side"
-    />
-  </div>
-
-  <div class="self-end pt-1 md:self-start md:pt-5">
-    <button type="button" class="grid h-11 w-11 shrink-0 place-items-center rounded-[0.25rem] border border-outline-variant/30 bg-surface-container text-on-surface-variant hover:bg-error-container hover:text-on-error-container" [attr.aria-label]="'Remove item ' + (index() + 1)" (click)="remove.emit()">
-      <span class="material-symbols-outlined text-[20px]" aria-hidden="true">delete</span>
-    </button>
-  </div>
-  </div>
-  <p class="flex min-h-4 flex-wrap items-center gap-x-3 text-xs leading-4 text-error" [id]="errorId()" [attr.role]="showMenuError() || showQtyError() ? 'alert' : null">
+  <p class="flex min-h-4 flex-wrap items-center gap-x-3 text-xs leading-4 text-error" [id]="errorId()"
+    [attr.role]="showMenuError() || showQtyError() ? 'alert' : null">
     @if (showMenuError()) {
-      <span>Select a menu item.</span>
+    <span>Select a menu item.</span>
     }
     @if (showQtyError()) {
-      <span>Enter a whole number from 1 to 20.</span>
+    <span>Enter a whole number from 1 to 20.</span>
     }
   </p>
 </div>

@@ -1,8 +1,8 @@
 <section
-  class="flex min-h-[calc(100vh-250px)] flex-col rounded-[0.25rem] border border-outline-variant/30 bg-surface-container-low p-2"
+  class="flex min-h-[calc(100vh-250px)] flex-col rounded-sm border border-outline-variant/30 bg-surface-container-low p-2"
   [attr.aria-label]="column().title + ' orders'"
 >
-  <header class="mb-2 flex items-center justify-between rounded-[0.125rem] bg-surface-container-high px-2 py-2">
+  <header class="mb-2 flex items-center justify-between rounded-xs bg-surface-container-high px-2 py-2">
     <div class="flex items-center gap-2">
       <span [class]="dotClass()" aria-hidden="true"></span>
       <h2 class="text-lg leading-6 font-semibold text-on-surface">{{ column().title }}</h2>
@@ -12,7 +12,7 @@
 
   @if (column().orders.length === 0) {
     <div
-      class="flex min-h-[220px] flex-1 flex-col items-center justify-center rounded-[0.125rem] border border-dashed border-outline-variant/50 p-4 text-center"
+      class="flex min-h-55 flex-1 flex-col items-center justify-center rounded-xs border border-dashed border-outline-variant/50 p-4 text-center"
     >
       <div class="mb-2 grid size-12 place-items-center rounded-full bg-surface-container-lowest text-outline shadow-sm">
         <span class="material-symbols-outlined text-[24px]" aria-hidden="true">{{ emptyIcon() }}</span>

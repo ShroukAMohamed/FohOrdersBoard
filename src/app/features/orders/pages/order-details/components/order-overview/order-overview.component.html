@@ -7,19 +7,19 @@
         {{ detail().statusLabel }}
       </span>
       @if (detail().late) {
-        <span
-          class="inline-flex items-center gap-1 rounded-xs bg-error-container px-3 py-1 font-mono text-xs font-bold text-on-error-container"
-        >
-          <span class="material-symbols-outlined text-[14px]" aria-hidden="true">warning</span>
-          {{ detail().elapsedLabel }} late (&gt; 20m threshold)
-        </span>
+      <span
+        class="inline-flex items-center gap-1 rounded-xs bg-error-container px-3 py-1 font-mono text-xs font-bold text-on-error-container">
+        <span class="material-symbols-outlined text-[14px]" aria-hidden="true">warning</span>
+        {{ detail().elapsedLabel }} late (&gt; 20m threshold)
+      </span>
       }
     </div>
     @if (detail().actionLabel) {
-      <button type="button" [class]="actionClass(detail().status)" [disabled]="advancing()" (click)="advance.emit()">
-        {{ detail().actionLabel }}
-        <span class="material-symbols-outlined" aria-hidden="true">arrow_forward</span>
-      </button>
+    <button pButton type="button" [pButton]="{ styleClass: actionClass(detail().status) }" [disabled]="advancing()"
+      (click)="advance.emit()">
+      {{ detail().actionLabel }}
+      <span class="material-symbols-outlined" aria-hidden="true">arrow_forward</span>
+    </button>
     }
   </div>
 
@@ -27,18 +27,19 @@
     <div class="flex flex-col rounded-sm bg-surface-container-low p-3">
       <span class="text-xs font-medium text-on-surface-variant">Order Type</span>
       <span class="mt-0.5 flex items-center gap-1 text-lg leading-6 font-semibold">
-        <span class="material-symbols-outlined text-[20px] text-primary" aria-hidden="true">{{ detail().typeIcon }}</span>
+        <span class="material-symbols-outlined text-[20px] text-primary" aria-hidden="true">{{ detail().typeIcon
+          }}</span>
         {{ detail().typeLabel }}
       </span>
     </div>
     @if (detail().tableLabel) {
-      <div class="flex flex-col rounded-sm bg-surface-container-low p-3">
-        <span class="text-xs font-medium text-on-surface-variant">Table Assignment</span>
-        <span class="mt-0.5 flex items-center gap-1 text-lg leading-6 font-semibold">
-          <span class="material-symbols-outlined text-[20px] text-primary" aria-hidden="true">table_bar</span>
-          {{ detail().tableLabel }}
-        </span>
-      </div>
+    <div class="flex flex-col rounded-sm bg-surface-container-low p-3">
+      <span class="text-xs font-medium text-on-surface-variant">Table Assignment</span>
+      <span class="mt-0.5 flex items-center gap-1 text-lg leading-6 font-semibold">
+        <span class="material-symbols-outlined text-[20px] text-primary" aria-hidden="true">table_bar</span>
+        {{ detail().tableLabel }}
+      </span>
+    </div>
     }
     <div class="flex flex-col rounded-sm bg-surface-container-low p-3">
       <span class="text-xs font-medium text-on-surface-variant">Creation Time</span>

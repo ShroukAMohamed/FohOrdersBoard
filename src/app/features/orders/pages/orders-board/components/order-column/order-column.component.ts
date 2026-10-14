@@ -32,7 +32,7 @@ export class OrderColumnComponent {
     }[this.column().status];
     const tone = this.column().count === 0 ? 'bg-surface-variant text-on-surface-variant' : statusTone;
 
-    return `rounded-[0.125rem] px-2 py-0.5 font-mono text-xs font-bold tabular-nums ${tone}`;
+    return `rounded-xs px-2 py-0.5 font-mono text-xs font-bold tabular-nums ${tone}`;
   }
 
   protected emptyIcon(): string {

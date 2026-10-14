@@ -84,13 +84,14 @@ describe('NewOrderComponent', () => {
   it('renders menu choices, updates the total, and adds and removes rows', () => {
     create();
 
-    expect(text()).toContain('Chicken Shawarma Plate — EGP 165.00');
+    expect(text()).toContain('Select a menu item');
     expect(text()).toContain('EGP 0.00');
 
     const form = fixture.componentInstance.form;
     form.controls.items.at(0).controls.menuId.setValue('m2');
     form.controls.items.at(0).controls.qty.setValue(2);
     fixture.detectChanges();
+    expect(text()).toContain('Chicken Shawarma Plate — EGP 165.00');
     expect(text()).toContain('EGP 330.00');
     expect(text()).toContain('EGP 39.60');
     expect(text()).toContain('EGP 51.74');
@@ -122,9 +123,9 @@ describe('NewOrderComponent', () => {
     expect(text()).toContain('Please fix the highlighted errors before submitting.');
     expect(text()).toContain('Enter a table number.');
 
-    const delivery = [...fixture.nativeElement.querySelectorAll('[role="radio"]')].find((button) =>
+    const delivery = [...fixture.nativeElement.querySelectorAll('[role="button"]')].find((button) =>
       (button.textContent as string).includes('Delivery'),
-    ) as HTMLButtonElement;
+    ) as HTMLElement;
     delivery.click();
     fixture.detectChanges();
 
@@ -220,7 +221,7 @@ describe('NewOrderComponent', () => {
     fixture.detectChanges();
 
     expect(text()).toContain('Create New Order');
-    expect(text()).toContain('Chicken Shawarma Plate');
+    expect(text()).toContain('Select a menu item');
   });
 
   it('shows an empty menu without a submit form', () => {

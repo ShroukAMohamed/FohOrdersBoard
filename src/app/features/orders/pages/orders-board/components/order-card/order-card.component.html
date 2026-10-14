@@ -1,9 +1,8 @@
 <article [class]="articleClass()">
   <a class="flex flex-col gap-2 text-inherit no-underline" [routerLink]="['/orders', card().id]">
     @if (card().lateLabel) {
-    <div
-      class="flex items-center justify-between rounded-[0.125rem] bg-error-container px-2 py-1 text-on-error-container">
-      <span class="flex items-center gap-1 text-[11px] leading-[14px] font-bold tracking-[0.05em]">
+    <div class="flex items-center justify-between rounded-xs bg-error-container px-2 py-1 text-on-error-container">
+      <span class="flex items-center gap-1 text-[11px] leading-3.5 font-bold tracking-wider">
         <span class="material-symbols-outlined text-[15px] text-error" aria-hidden="true">warning</span>
         {{ card().lateLabel }}
       </span>
@@ -34,13 +33,14 @@
   </a>
 
   @if (card().actionLabel) {
-  <button type="button" [class]="actionClass()" [disabled]="card().advancing" (click)="onAdvance($event)">
+  <button pButton type="button" [pButton]="{ styleClass: actionClass() }" [disabled]="card().advancing"
+    (click)="onAdvance($event)">
     <span>{{ card().actionLabel }}</span>
     <span class="material-symbols-outlined text-[18px]" aria-hidden="true">{{ actionIcon() }}</span>
   </button>
   } @else {
   <div
-    class="flex h-9 w-full items-center justify-center gap-1.5 rounded-[0.125rem] bg-surface-container text-sm font-semibold text-on-surface-variant">
+    class="flex h-9 w-full items-center justify-center gap-1.5 rounded-xs bg-surface-container text-sm font-semibold text-on-surface-variant">
     <span class="material-symbols-outlined text-[16px] text-secondary" aria-hidden="true">check_circle</span>
     <span>Completed</span>
   </div>

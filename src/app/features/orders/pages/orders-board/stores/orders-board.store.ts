@@ -1,4 +1,4 @@
-import { computed, DestroyRef, inject, Injectable, signal } from '@angular/core';
+import { computed, DestroyRef, inject, Injectable, Signal, signal } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ActivatedRoute, Router } from '@angular/router';
 import { catchError, debounceTime, distinctUntilChanged, exhaustMap, forkJoin, fromEvent, interval, map, of, Subject, Subscription, timer } from 'rxjs';
@@ -85,7 +85,7 @@ export class OrdersBoardStore {
   readonly appliedSearch = signal('');
   readonly typeFilter = signal<BoardTypeFilter>('all');
 
-  readonly columns = computed(() => {
+  readonly columns: Signal<OrderColumnModel[]> = computed(() => {
     const query = this.appliedSearch();
     const type = this.typeFilter();
     const visible = this.orders().filter(

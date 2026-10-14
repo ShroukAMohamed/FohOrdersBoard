@@ -1,12 +1,14 @@
-import { Component, input, output } from '@angular/core';
+import { Component, computed, input, output } from '@angular/core';
 import { FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { ButtonDirective } from 'primeng/button';
+import { Select } from 'primeng/select';
 
 import { MenuItem } from '../../../../models/menu-item.model';
 import { NewOrderItemForm } from '../../forms/new-order.form';
 
 @Component({
   selector: 'app-order-item-row',
-  imports: [ReactiveFormsModule],
+  imports: [ButtonDirective, ReactiveFormsModule, Select],
   templateUrl: './order-item-row.component.html',
 })
 export class OrderItemRowComponent {
@@ -14,6 +16,13 @@ export class OrderItemRowComponent {
   readonly item = input.required<FormGroup<NewOrderItemForm>>();
   readonly menu = input.required<readonly MenuItem[]>();
   readonly remove = output<void>();
+
+  protected readonly menuOptions = computed(() =>
+    this.menu().map((entry) => ({
+      id: entry.id,
+      label: `${entry.name} — EGP ${entry.price.toFixed(2)}`,
+    })),
+  );
 
   protected menuId(): string {
     return `menu-item-${this.index()}`;

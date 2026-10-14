@@ -1,28 +1,33 @@
-<section class="flex flex-col gap-4 rounded-lg border border-outline-variant/30 bg-surface-container-lowest p-4 shadow-sm md:p-6" aria-labelledby="order-items-heading">
+<section
+  class="flex flex-col gap-4 rounded-lg border border-outline-variant/30 bg-surface-container-lowest p-4 shadow-sm md:p-6"
+  aria-labelledby="order-items-heading">
   <div class="flex flex-col justify-between gap-2 sm:flex-row sm:items-center">
     <div>
       <h2 id="order-items-heading" class="flex items-center gap-2 text-lg leading-6 font-semibold">
-        <span class="grid size-6 place-items-center rounded-full bg-primary-fixed font-mono text-xs text-on-primary-fixed">2</span>
+        <span
+          class="grid size-6 place-items-center rounded-full bg-primary-fixed font-mono text-xs text-on-primary-fixed">2</span>
         Order Items
       </h2>
       <p class="mt-0.5 text-xs text-on-surface-variant">At least 1 item is required. Quantity is 1–20 per item.</p>
     </div>
-    <button type="button" class="inline-flex min-h-11 items-center gap-1.5 self-start rounded-[0.25rem] bg-primary-fixed px-3 py-2 text-sm font-semibold text-on-primary-fixed shadow-sm hover:bg-primary-container hover:text-on-primary-container sm:self-auto" (click)="add.emit()">
-      <span class="material-symbols-outlined text-[18px]" aria-hidden="true">add</span>
+    <button pButton type="button" [pButton]="{
+        styleClass: '!inline-flex !min-h-11 !items-center !gap-1.5 !self-start !rounded-sm !border-0 !bg-primary-fixed !px-3 !py-2 !text-sm !font-semibold !text-on-primary-fixed !shadow-sm hover:!bg-primary-container hover:!text-on-primary-container sm:!self-auto'
+      }" (click)="add.emit()">
+      <span class="material-symbols-outlined text-[1.125em]" aria-hidden="true">add</span>
       Add Item
     </button>
   </div>
 
   <div class="flex flex-col gap-3">
     @for (item of items().controls; track item; let index = $index) {
-      <app-order-item-row [index]="index" [item]="item" [menu]="menu()" (remove)="remove.emit(index)" />
+    <app-order-item-row [index]="index" [item]="item" [menu]="menu()" (remove)="remove.emit(index)" />
     }
   </div>
 
   @if (items().length === 0 && items().touched) {
-    <p class="flex items-center gap-2 rounded-[0.25rem] bg-error-container p-2 text-sm text-on-error-container" role="alert">
-      <span class="material-symbols-outlined text-[18px]" aria-hidden="true">warning</span>
-      At least 1 item is required. The order cannot be empty.
-    </p>
+  <p class="flex items-center gap-2 rounded-sm bg-error-container p-2 text-sm text-on-error-container" role="alert">
+    <span class="material-symbols-outlined text-[1.125em]" aria-hidden="true">warning</span>
+    At least 1 item is required. The order cannot be empty.
+  </p>
   }
 </section>

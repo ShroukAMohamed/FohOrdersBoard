@@ -1,4 +1,5 @@
 import { Component, inject } from '@angular/core';
+import { ButtonDirective } from 'primeng/button';
 
 import { BoardColumnSkeletonComponent } from '../../../../../shared/components/loading-state/board-column-skeleton/board-column-skeleton.component';
 import { OrderColumnComponent } from '../components/order-column/order-column.component';
@@ -6,12 +7,12 @@ import { BoardTypeFilter, OrdersBoardStore } from '../stores/orders-board.store'
 
 @Component({
   selector: 'app-orders-board',
-  imports: [OrderColumnComponent, BoardColumnSkeletonComponent],
+  imports: [ButtonDirective, OrderColumnComponent, BoardColumnSkeletonComponent],
   providers: [OrdersBoardStore],
   templateUrl: './orders-board.component.html',
 })
 export class OrdersBoardComponent {
-  protected readonly store = inject(OrdersBoardStore);
+  protected readonly store: OrdersBoardStore = inject(OrdersBoardStore);
   protected readonly skeletonColumns = [0, 1, 2, 3];
   protected readonly typeFilters: { id: BoardTypeFilter; label: string }[] = [
     { id: 'all', label: 'All' },

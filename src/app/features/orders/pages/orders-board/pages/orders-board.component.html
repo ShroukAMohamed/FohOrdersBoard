@@ -15,11 +15,13 @@
               aria-hidden="true">search</span>
             <input type="search"
               class="h-10 w-full rounded-xs border border-outline-variant/30 bg-surface-container-low pr-10 pl-10 text-sm text-on-surface outline-none placeholder:text-outline focus:bg-surface-container-lowest focus:ring-2 focus:ring-primary-container"
-              placeholder="Search by order or table number..." [value]="store.searchDraft()" (input)="onSearch($event)" />
+              placeholder="Search by order or table number..." [value]="store.searchDraft()"
+              (input)="onSearch($event)" />
             @if (store.searchDraft()) {
-            <button type="button"
-              class="absolute top-1/2 right-1 grid size-8 -translate-y-1/2 place-items-center rounded-xs text-on-surface-variant hover:text-on-surface"
-              aria-label="Clear search" (click)="store.clearSearch()">
+            <button pButton type="button" aria-label="Clear search" [pButton]="{
+                iconOnly: true,
+                styleClass: '!absolute !top-1/2 !right-1 !grid !size-8 !-translate-y-1/2 !place-items-center !rounded-xs !border-0 !bg-transparent !p-0 !text-on-surface-variant !shadow-none hover:!bg-transparent hover:!text-on-surface'
+              }" (click)="store.clearSearch()">
               <span class="material-symbols-outlined text-[18px]" aria-hidden="true">close</span>
             </button>
             }
@@ -28,11 +30,11 @@
             class="flex items-center gap-0.5 rounded-xs border border-outline-variant/30 bg-surface-container-low p-0.5"
             role="group" aria-label="Filter by order type">
             @for (filter of typeFilters; track filter.id) {
-            <button type="button" class="rounded-xs px-3 py-1.5 text-sm font-semibold transition" [class]="
-                  store.typeFilter() === filter.id
-                    ? 'bg-surface-container-lowest text-on-surface shadow-sm'
-                    : 'text-on-surface-variant hover:text-on-surface'
-                " [attr.aria-pressed]="store.typeFilter() === filter.id" (click)="store.setType(filter.id)">
+            <button pButton type="button" [pButton]="{
+                  styleClass: store.typeFilter() === filter.id
+                    ? '!rounded-xs !border-0 !bg-surface-container-lowest !px-3 !py-1.5 !text-sm !font-semibold !text-on-surface !shadow-sm'
+                    : '!rounded-xs !border-0 !bg-transparent !px-3 !py-1.5 !text-sm !font-semibold !text-on-surface-variant !shadow-none hover:!bg-transparent hover:!text-on-surface'
+                }" [attr.aria-pressed]="store.typeFilter() === filter.id" (click)="store.setType(filter.id)">
               {{ filter.label }}
             </button>
             }
@@ -58,9 +60,10 @@
         </div>
         <h2 class="text-2xl leading-8 font-bold">Connection Interrupted</h2>
         <p class="mt-1 max-w-md text-sm text-on-surface-variant">{{ message }}</p>
-        <button type="button"
-          class="mt-6 flex items-center gap-2 rounded-xs bg-error px-5 py-2.5 text-sm font-semibold text-on-error shadow-sm hover:opacity-90"
-          (click)="store.load()">
+        <button pButton type="button" [pButton]="{
+            severity: 'danger',
+            styleClass: '!mt-6 !inline-flex !min-h-11 !items-center !gap-2 !rounded-xs !border-0 !bg-error !px-5 !py-2.5 !text-sm !font-semibold !text-on-error !shadow-sm hover:!bg-error hover:!opacity-90'
+          }" (click)="store.load()">
           <span class="material-symbols-outlined text-[20px]" aria-hidden="true">refresh</span>
           Retry Connection
         </button>
@@ -108,16 +111,16 @@
         </p>
         <div class="mt-4 flex flex-wrap justify-center gap-2">
           @if (store.appliedSearch()) {
-          <button type="button"
-            class="rounded-xs bg-surface-container-highest px-4 py-2 text-sm font-semibold hover:bg-surface-variant"
-            (click)="store.clearSearch()">
+          <button pButton type="button" [pButton]="{
+              styleClass: '!rounded-xs !border-0 !bg-surface-container-highest !px-4 !py-2 !text-sm !font-semibold !text-on-surface !shadow-none hover:!bg-surface-variant'
+            }" (click)="store.clearSearch()">
             Clear search query
           </button>
           }
           @if (store.typeFilter() !== 'all') {
-          <button type="button"
-            class="rounded-xs bg-surface-container-highest px-4 py-2 text-sm font-semibold hover:bg-surface-variant"
-            (click)="store.setType('all')">
+          <button pButton type="button" [pButton]="{
+              styleClass: '!rounded-xs !border-0 !bg-surface-container-highest !px-4 !py-2 !text-sm !font-semibold !text-on-surface !shadow-none hover:!bg-surface-variant'
+            }" (click)="store.setType('all')">
             Show all types
           </button>
           }
