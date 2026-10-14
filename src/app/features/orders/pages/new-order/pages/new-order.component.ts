@@ -7,6 +7,8 @@ import { switchMap } from 'rxjs';
 import { MenuApiService } from '../../../data-access/menu-api.service';
 import { OrdersApiService } from '../../../data-access/orders-api.service';
 import { MenuItem } from '../../../models/menu-item.model';
+import { FormSkeletonComponent } from '../../../../../shared/components/loading-state/form-skeleton/form-skeleton.component';
+import { NotificationService } from '../../../../../shared/services/notification.service';
 import { NewOrderFinancialSummaryComponent } from '../components/new-order-financial-summary/new-order-financial-summary.component';
 import { OrderItemsFormComponent } from '../components/order-items-form/order-items-form.component';
 import { OrderTypeSectionComponent } from '../components/order-type-section/order-type-section.component';
@@ -14,7 +16,7 @@ import { applyOrderType, createItemGroup, createNewOrderForm, summarizeOrder, to
 
 @Component({
   selector: 'app-new-order',
-  imports: [RouterLink, ReactiveFormsModule, OrderTypeSectionComponent, OrderItemsFormComponent, NewOrderFinancialSummaryComponent],
+  imports: [RouterLink, ReactiveFormsModule, OrderTypeSectionComponent, OrderItemsFormComponent, NewOrderFinancialSummaryComponent, FormSkeletonComponent],
   templateUrl: './new-order.component.html',
 })
 export class NewOrderComponent {
@@ -22,13 +24,13 @@ export class NewOrderComponent {
   private readonly ordersApi = inject(OrdersApiService);
   private readonly router = inject(Router);
   private readonly destroyRef = inject(DestroyRef);
+  private readonly notifications = inject(NotificationService);
 
   readonly form = createNewOrderForm();
   protected readonly menu = signal<MenuItem[]>([]);
   protected readonly menuLoading = signal(true);
   protected readonly menuError = signal<string | null>(null);
   protected readonly submitting = signal(false);
-  protected readonly submitError = signal<string | null>(null);
   protected readonly showValidation = signal(false);
   private readonly snapshot = signal(this.form.getRawValue());
 
@@ -58,7 +60,9 @@ export class NewOrderComponent {
         error: () => {
           this.menu.set([]);
           this.menuLoading.set(false);
-          this.menuError.set('Unable to load the menu. Check that the API is running, then retry.');
+          const message = 'Unable to load the menu. Check that the API is running, then retry.';
+          this.menuError.set(message);
+          this.notifications.error(message, 'Connection interrupted');
         },
       });
   }
@@ -77,7 +81,6 @@ export class NewOrderComponent {
   }
 
   protected submit(): void {
-    this.submitError.set(null);
     if (this.submitting() || this.menuLoading() || this.menu().length === 0) {
       return;
     }
@@ -102,7 +105,10 @@ export class NewOrderComponent {
         },
         error: () => {
           this.submitting.set(false);
-          this.submitError.set('Could not create the order. Check that the API is running, then try again.');
+          this.notifications.error(
+            'Could not create the order. Check that the API is running, then try again.',
+            'Could not create order',
+          );
         },
       });
   }

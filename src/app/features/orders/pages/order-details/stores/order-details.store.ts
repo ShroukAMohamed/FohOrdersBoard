@@ -12,6 +12,7 @@ import { calculateOrderTotals, PricedOrderLine, priceOrderLines } from '../../..
 import { formatElapsed } from '../../../utils/elapsed-time';
 import { orderItemCount } from '../../../utils/order-board';
 import { isLateOrder, nextOrderStatus } from '../../../utils/order-status';
+import { NotificationService } from '../../../../../shared/services/notification.service';
 
 const STATUS_LABEL: Record<OrderStatus, string> = {
   new: 'New',
@@ -74,6 +75,7 @@ export class OrderDetailsStore {
   private readonly menuApi = inject(MenuApiService);
   private readonly route = inject(ActivatedRoute);
   private readonly destroyRef = inject(DestroyRef);
+  private readonly notifications = inject(NotificationService);
   private readonly reload = new Subject<void>();
 
   private readonly order = signal<Order | null>(null);
@@ -138,7 +140,9 @@ export class OrderDetailsStore {
           if (latest?.id === current.id) {
             this.order.set({ ...latest, status: previousStatus });
           }
-          this.actionError.set(`Could not move order ${current.number} to ${STATUS_LABEL[nextStatus]}.`);
+          const message = `Could not move order ${current.number} to ${STATUS_LABEL[nextStatus]}.`;
+          this.actionError.set(message);
+          this.notifications.error(message, 'Update failed');
         },
       });
   }
@@ -173,7 +177,9 @@ export class OrderDetailsStore {
           this.notFound.set(true);
           return EMPTY;
         }
-        this.loadError.set('Unable to connect to the orders service. Check that the API is running, then retry.');
+        const message = 'Unable to connect to the orders service. Check that the API is running, then retry.';
+        this.loadError.set(message);
+        this.notifications.error(message, 'Connection interrupted');
         return EMPTY;
       }),
     );

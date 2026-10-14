@@ -10,6 +10,7 @@ import { OrdersApiService } from '../../../data-access/orders-api.service';
 import { formatElapsed } from '../../../utils/elapsed-time';
 import { orderBoardSubtotal, orderItemCount, orderMatchesSearch, orderPlaceLabel } from '../../../utils/order-board';
 import { isLateOrder, nextOrderStatus } from '../../../utils/order-status';
+import { NotificationService } from '../../../../../shared/services/notification.service';
 
 const POLL_INTERVAL_MS = 15_000;
 const SEARCH_DEBOUNCE_MS = 300;
@@ -71,6 +72,7 @@ export class OrdersBoardStore {
   private readonly router = inject(Router);
   private readonly route = inject(ActivatedRoute);
   private readonly destroyRef = inject(DestroyRef);
+  private readonly notifications = inject(NotificationService);
 
   private readonly orders = signal<Order[]>([]);
   private readonly menu = signal<MenuItem[]>([]);
@@ -210,7 +212,9 @@ export class OrdersBoardStore {
     }
 
     this.orders.set([]);
-    this.loadError.set('Unable to connect to the orders service. Check that the API is running, then retry.');
+    const message = 'Unable to connect to the orders service. Check that the API is running, then retry.';
+    this.loadError.set(message);
+    this.notifications.error(message, 'Connection interrupted');
   }
 
   private revertAdvance(orderId: string, orderNumber: number, nextStatus: OrderStatus): void {
@@ -226,7 +230,9 @@ export class OrdersBoardStore {
       this.orders.update((orders) => orders.filter((order) => order.id !== orderId));
     }
 
-    this.actionError.set(`Could not move order ${orderNumber} to ${STATUS_LABEL[nextStatus]}.`);
+    const message = `Could not move order ${orderNumber} to ${STATUS_LABEL[nextStatus]}.`;
+    this.actionError.set(message);
+    this.notifications.error(message, 'Update failed');
   }
 
   private replaceOrder(orderId: string, patch: Partial<Order>): void {
@@ -298,7 +304,9 @@ export class OrdersBoardStore {
         exhaustMap(() =>
           this.ordersApi.getOrders().pipe(
             catchError(() => {
-              this.refreshWarning.set('Could not refresh orders. Showing the last successful update.');
+              const message = 'Could not refresh orders. Showing the last successful update.';
+              this.refreshWarning.set(message);
+              this.notifications.warn(message, 'Refresh failed');
               return of(null);
             }),
           ),

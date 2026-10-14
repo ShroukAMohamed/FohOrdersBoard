@@ -63,6 +63,10 @@ html {
   color-scheme: light;
 }
 
+.p-toast.p-toast-top-right {
+  top: 4.75rem;
+}
+
 body {
   min-height: 100dvh;
   background-color: var(--color-canvas);

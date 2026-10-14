@@ -1,5 +1,6 @@
 import { Component, inject } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { MessageService } from 'primeng/api';
 import { convertToParamMap, Router, ActivatedRoute } from '@angular/router';
 import { BehaviorSubject, of, Subject, throwError } from 'rxjs';
 import { vi } from 'vitest';
@@ -99,6 +100,7 @@ describe('OrdersBoardStore', () => {
           useValue: { getOrders, updateStatus, getOrder: vi.fn(), createOrder: vi.fn() },
         },
         { provide: MenuApiService, useValue: { getMenu } },
+        MessageService,
       ],
     });
   });

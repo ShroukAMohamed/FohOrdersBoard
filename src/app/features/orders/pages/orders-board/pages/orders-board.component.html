@@ -42,26 +42,11 @@
     </div>
 
     <div class="flex flex-1 flex-col p-6">
-      @if (store.actionError(); as message) {
-      <p role="alert" class="mb-4 rounded-xs bg-error-container px-3 py-2 text-sm text-on-error-container">{{
-        message }}</p>
-      }
-      @if (store.refreshWarning(); as message) {
-      <p role="status" class="mb-4 rounded-xs bg-tertiary-fixed px-3 py-2 text-sm text-on-tertiary-fixed">{{
-        message }}</p>
-      }
-
       @if (store.loading()) {
       <div class="grid grid-cols-1 items-start gap-4 md:grid-cols-2 lg:grid-cols-4" role="status"
         aria-label="Loading orders">
         @for (column of skeletonColumns; track column) {
-        <div class="flex min-h-125 flex-col rounded-sm bg-surface-container-low p-2">
-          <div class="mb-3 h-10 animate-pulse rounded-xs bg-surface-container-high"></div>
-          <div class="flex flex-col gap-3">
-            <div class="h-36 animate-pulse rounded-xs bg-surface-container-lowest"></div>
-            <div class="h-36 animate-pulse rounded-xs bg-surface-container-lowest"></div>
-          </div>
-        </div>
+        <app-board-column-skeleton />
         }
         <span class="sr-only">Loading orders…</span>
       </div>

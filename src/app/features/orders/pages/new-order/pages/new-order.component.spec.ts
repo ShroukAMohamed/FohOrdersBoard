@@ -1,5 +1,6 @@
 import { provideRouter, Router } from '@angular/router';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { MessageService } from 'primeng/api';
 import { of, Subject, throwError } from 'rxjs';
 
 import { MenuApiService } from '../../../data-access/menu-api.service';
@@ -63,6 +64,7 @@ describe('NewOrderComponent', () => {
         provideRouter([]),
         { provide: MenuApiService, useValue: { getMenu } },
         { provide: OrdersApiService, useValue: { getOrders, createOrder } },
+        MessageService,
       ],
     });
   });
@@ -183,6 +185,7 @@ describe('NewOrderComponent', () => {
     create();
     fillValidOrder();
     const navigate = vi.spyOn(TestBed.inject(Router), 'navigate').mockResolvedValue(true);
+    const add = vi.spyOn(TestBed.inject(MessageService), 'add');
 
     (
       [...fixture.nativeElement.querySelectorAll('button')].find((button) =>
@@ -191,7 +194,13 @@ describe('NewOrderComponent', () => {
     ).click();
     fixture.detectChanges();
 
-    expect(text()).toContain('Could not create the order. Check that the API is running, then try again.');
+    expect(add).toHaveBeenCalledWith(
+      expect.objectContaining({
+        severity: 'error',
+        summary: 'Could not create order',
+        detail: 'Could not create the order. Check that the API is running, then try again.',
+      }),
+    );
     expect(navigate).not.toHaveBeenCalled();
     expect((fixture.nativeElement.querySelector('button[type="submit"]') as HTMLButtonElement).disabled).toBe(false);
   });

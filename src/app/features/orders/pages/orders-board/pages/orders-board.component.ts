@@ -1,11 +1,12 @@
 import { Component, inject } from '@angular/core';
 
+import { BoardColumnSkeletonComponent } from '../../../../../shared/components/loading-state/board-column-skeleton/board-column-skeleton.component';
 import { OrderColumnComponent } from '../components/order-column/order-column.component';
 import { BoardTypeFilter, OrdersBoardStore } from '../stores/orders-board.store';
 
 @Component({
   selector: 'app-orders-board',
-  imports: [OrderColumnComponent],
+  imports: [OrderColumnComponent, BoardColumnSkeletonComponent],
   providers: [OrdersBoardStore],
   templateUrl: './orders-board.component.html',
 })

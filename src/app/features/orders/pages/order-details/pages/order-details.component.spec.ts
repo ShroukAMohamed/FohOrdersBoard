@@ -1,6 +1,7 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { provideRouter, ActivatedRoute, convertToParamMap } from '@angular/router';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { MessageService } from 'primeng/api';
 import { BehaviorSubject, of, Subject, throwError } from 'rxjs';
 
 import { MenuApiService } from '../../../data-access/menu-api.service';
@@ -77,6 +78,7 @@ describe('OrderDetailsComponent', () => {
         { provide: ActivatedRoute, useValue: { paramMap: params.asObservable() } },
         { provide: OrdersApiService, useValue: { getOrder, updateStatus } },
         { provide: MenuApiService, useValue: { getMenu } },
+        MessageService,
       ],
     });
   });
@@ -179,11 +181,18 @@ describe('OrderDetailsComponent', () => {
     updateStatus.mockReturnValue(throwError(() => new Error('down')));
     create();
 
+    const add = vi.spyOn(TestBed.inject(MessageService), 'add');
     (fixture.nativeElement.querySelector('button') as HTMLButtonElement).click();
     fixture.detectChanges();
 
     expect(text()).toContain('Preparing');
-    expect(text()).toContain('Could not move order 1041 to Ready.');
+    expect(add).toHaveBeenCalledWith(
+      expect.objectContaining({
+        severity: 'error',
+        summary: 'Update failed',
+        detail: 'Could not move order 1041 to Ready.',
+      }),
+    );
     expect(fixture.nativeElement.querySelector('h1')?.textContent).toContain('Order #1041');
     expect(fixture.nativeElement.querySelector('button')?.textContent).toContain('Mark Ready');
   });
