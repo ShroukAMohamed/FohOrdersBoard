@@ -35,7 +35,7 @@ Pages are lazy-loaded. `OrdersRoutingModule` registers `''`, `'new'`, and `':id'
 src/app/
 ├── core/
 │   ├── config/                 # API_BASE_URL (http://localhost:3000)
-│   └── theme/                  # Aura preset, limited to Toast and Skeleton
+│   └── theme/                  # Aura preset for the PrimeNG components in use
 ├── layout/
 │   ├── app-shell/              # Header plus router outlet
 │   └── top-navigation/         # Orders Board and New Order links
@@ -141,7 +141,7 @@ Seed orders were created on 2026-09-27, so every New and Preparing seed ticket i
 - **Standalone components** for every page and section. The only NgModule is `OrdersRoutingModule`, so the feature can lazy-load through `RouterModule.forChild`.
 - **Signals instead of a state library.** The board and details state fits in two page-scoped stores.
 - **Tailwind CSS 4** for layout, using the Kitchen Orders Board color tokens (primary `#004ac6`, surfaces, error, and status colors).
-- **PrimeNG** only for Toast and Skeleton. The theme preset includes those two component token sets, not the full Aura catalog.
+- **PrimeNG** for Toast, Skeleton, Select, SelectButton, and the `[pButton]` directive. The theme preset includes those component token sets (button, select, selectbutton, skeleton, toast, and togglebutton), not the full Aura catalog.
 - **Reactive forms** for Create New Order, including one custom validator (`egyptianMobileValidator`) and a whole-number validator for table and quantity.
 
 ---
