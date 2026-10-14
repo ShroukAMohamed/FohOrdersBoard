@@ -1,13 +1,14 @@
 <article [class]="articleClass()">
   <a class="flex flex-col gap-2 text-inherit no-underline" [routerLink]="['/orders', card().id]">
     @if (card().lateLabel) {
-      <div class="flex items-center justify-between rounded-[0.125rem] bg-error-container px-2 py-1 text-on-error-container">
-        <span class="flex items-center gap-1 text-[11px] leading-[14px] font-bold tracking-[0.05em]">
-          <span class="material-symbols-outlined text-[15px] text-error" aria-hidden="true">warning</span>
-          {{ card().lateLabel }}
-        </span>
-        <span class="font-mono text-xs font-semibold tabular-nums">{{ card().elapsedLabel }}</span>
-      </div>
+    <div
+      class="flex items-center justify-between rounded-[0.125rem] bg-error-container px-2 py-1 text-on-error-container">
+      <span class="flex items-center gap-1 text-[11px] leading-[14px] font-bold tracking-[0.05em]">
+        <span class="material-symbols-outlined text-[15px] text-error" aria-hidden="true">warning</span>
+        {{ card().lateLabel }}
+      </span>
+      <span class="font-mono text-xs font-semibold tabular-nums">{{ card().elapsedLabel }}</span>
+    </div>
     }
     <div class="flex items-start justify-between gap-2">
       <div class="flex items-center gap-2">
@@ -15,17 +16,16 @@
         <span [class]="placeClass()">{{ card().placeLabel }}</span>
       </div>
       @if (!card().lateLabel) {
-        <span
-          class="flex items-center gap-1 font-mono text-xs font-medium tabular-nums"
-          [class]="card().status === 'served' ? 'text-outline' : 'text-on-surface-variant'"
-        >
-          <span class="material-symbols-outlined text-[14px]" aria-hidden="true">schedule</span>
-          {{ card().elapsedLabel }}
-        </span>
+      <span class="flex items-center gap-1 font-mono text-xs font-medium tabular-nums"
+        [class]="card().status === 'served' ? 'text-outline' : 'text-on-surface-variant'">
+        <span class="material-symbols-outlined text-[14px]" aria-hidden="true">schedule</span>
+        {{ card().elapsedLabel }}
+      </span>
       }
     </div>
     <div class="flex items-center justify-between pt-1">
-      <span class="text-sm text-on-surface-variant">{{ card().itemCount }} {{ card().itemCount === 1 ? 'item' : 'items' }}</span>
+      <span class="text-sm text-on-surface-variant">{{ card().itemCount }} {{ card().itemCount === 1 ? 'item' : 'items'
+        }}</span>
       <span class="flex flex-col items-end">
         <span class="text-xs text-outline">Subtotal</span>
         <span class="font-mono text-sm font-semibold text-on-surface tabular-nums">{{ card().subtotalLabel }}</span>
@@ -34,14 +34,15 @@
   </a>
 
   @if (card().actionLabel) {
-    <button type="button" [class]="actionClass()" [disabled]="card().advancing" (click)="onAdvance($event)">
-      <span>{{ card().actionLabel }}</span>
-      <span class="material-symbols-outlined text-[18px]" aria-hidden="true">{{ actionIcon() }}</span>
-    </button>
+  <button type="button" [class]="actionClass()" [disabled]="card().advancing" (click)="onAdvance($event)">
+    <span>{{ card().actionLabel }}</span>
+    <span class="material-symbols-outlined text-[18px]" aria-hidden="true">{{ actionIcon() }}</span>
+  </button>
   } @else {
-    <div class="flex h-9 w-full items-center justify-center gap-1.5 rounded-[0.125rem] bg-surface-container text-sm font-semibold text-on-surface-variant">
-      <span class="material-symbols-outlined text-[16px] text-secondary" aria-hidden="true">check_circle</span>
-      <span>✓ Completed</span>
-    </div>
+  <div
+    class="flex h-9 w-full items-center justify-center gap-1.5 rounded-[0.125rem] bg-surface-container text-sm font-semibold text-on-surface-variant">
+    <span class="material-symbols-outlined text-[16px] text-secondary" aria-hidden="true">check_circle</span>
+    <span>Completed</span>
+  </div>
   }
 </article>

@@ -8,13 +8,13 @@
           </p>
         </div>
         <div class="flex flex-wrap items-center gap-4">
-          <label class="relative min-w-[280px] lg:min-w-[340px]">
+          <label class="relative min-w-70 lg:min-w-85">
             <span class="sr-only">Search by order number</span>
             <span
               class="material-symbols-outlined pointer-events-none absolute top-1/2 left-3 -translate-y-1/2 text-[20px] text-on-surface-variant"
               aria-hidden="true">search</span>
             <input type="search"
-              class="h-10 w-full rounded-[0.125rem] border border-outline-variant/30 bg-surface-container-low pr-10 pl-10 text-sm text-on-surface outline-none placeholder:text-outline focus:bg-surface-container-lowest focus:ring-2 focus:ring-primary-container"
+              class="h-10 w-full rounded-xs border border-outline-variant/30 bg-surface-container-low pr-10 pl-10 text-sm text-on-surface outline-none placeholder:text-outline focus:bg-surface-container-lowest focus:ring-2 focus:ring-primary-container"
               placeholder="Search by order number..." [value]="store.searchDraft()" (input)="onSearch($event)" />
             @if (store.searchDraft()) {
             <button type="button"
@@ -25,10 +25,10 @@
             }
           </label>
           <div
-            class="flex items-center gap-0.5 rounded-[0.125rem] border border-outline-variant/30 bg-surface-container-low p-0.5"
+            class="flex items-center gap-0.5 rounded-xs border border-outline-variant/30 bg-surface-container-low p-0.5"
             role="group" aria-label="Filter by order type">
             @for (filter of typeFilters; track filter.id) {
-            <button type="button" class="rounded-[0.125rem] px-3 py-1.5 text-sm font-semibold transition" [class]="
+            <button type="button" class="rounded-xs px-3 py-1.5 text-sm font-semibold transition" [class]="
                   store.typeFilter() === filter.id
                     ? 'bg-surface-container-lowest text-on-surface shadow-sm'
                     : 'text-on-surface-variant hover:text-on-surface'
@@ -43,11 +43,11 @@
 
     <div class="flex flex-1 flex-col p-6">
       @if (store.actionError(); as message) {
-      <p role="alert" class="mb-4 rounded-[0.125rem] bg-error-container px-3 py-2 text-sm text-on-error-container">{{
+      <p role="alert" class="mb-4 rounded-xs bg-error-container px-3 py-2 text-sm text-on-error-container">{{
         message }}</p>
       }
       @if (store.refreshWarning(); as message) {
-      <p role="status" class="mb-4 rounded-[0.125rem] bg-tertiary-fixed px-3 py-2 text-sm text-on-tertiary-fixed">{{
+      <p role="status" class="mb-4 rounded-xs bg-tertiary-fixed px-3 py-2 text-sm text-on-tertiary-fixed">{{
         message }}</p>
       }
 
@@ -55,11 +55,11 @@
       <div class="grid grid-cols-1 items-start gap-4 md:grid-cols-2 lg:grid-cols-4" role="status"
         aria-label="Loading orders">
         @for (column of skeletonColumns; track column) {
-        <div class="flex min-h-[500px] flex-col rounded-[0.25rem] bg-surface-container-low p-2">
-          <div class="mb-3 h-10 animate-pulse rounded-[0.125rem] bg-surface-container-high"></div>
+        <div class="flex min-h-125 flex-col rounded-sm bg-surface-container-low p-2">
+          <div class="mb-3 h-10 animate-pulse rounded-xs bg-surface-container-high"></div>
           <div class="flex flex-col gap-3">
-            <div class="h-36 animate-pulse rounded-[0.125rem] bg-surface-container-lowest"></div>
-            <div class="h-36 animate-pulse rounded-[0.125rem] bg-surface-container-lowest"></div>
+            <div class="h-36 animate-pulse rounded-xs bg-surface-container-lowest"></div>
+            <div class="h-36 animate-pulse rounded-xs bg-surface-container-lowest"></div>
           </div>
         </div>
         }
@@ -67,14 +67,14 @@
       </div>
       } @else if (store.loadError(); as message) {
       <section role="alert"
-        class="flex min-h-[440px] w-full flex-col items-center justify-center rounded-[0.5rem] bg-surface-container-low p-6 text-center">
+        class="flex min-h-110 w-full flex-col items-center justify-center rounded-lg bg-surface-container-low p-6 text-center">
         <div class="mb-4 grid size-16 place-items-center rounded-full bg-error-container text-error">
           <span class="material-symbols-outlined text-[36px]" aria-hidden="true">sync_problem</span>
         </div>
         <h2 class="text-2xl leading-8 font-bold">Connection Interrupted</h2>
         <p class="mt-1 max-w-md text-sm text-on-surface-variant">{{ message }}</p>
         <button type="button"
-          class="mt-6 flex items-center gap-2 rounded-[0.125rem] bg-error px-5 py-2.5 text-sm font-semibold text-on-error shadow-sm hover:opacity-90"
+          class="mt-6 flex items-center gap-2 rounded-xs bg-error px-5 py-2.5 text-sm font-semibold text-on-error shadow-sm hover:opacity-90"
           (click)="store.load()">
           <span class="material-symbols-outlined text-[20px]" aria-hidden="true">refresh</span>
           Retry Connection
@@ -83,7 +83,7 @@
       } @else if (!store.hasAnyOrders()) {
       <div class="flex flex-col gap-4">
         <section
-          class="flex flex-col items-center justify-between gap-4 rounded-[0.5rem] border border-outline-variant/30 bg-surface-container-lowest p-4 shadow-sm sm:flex-row">
+          class="flex flex-col items-center justify-between gap-4 rounded-lg border border-outline-variant/30 bg-surface-container-lowest p-4 shadow-sm sm:flex-row">
           <div class="flex flex-col items-center gap-4 text-center sm:flex-row sm:text-left">
             <div
               class="grid size-12 shrink-0 place-items-center rounded-full bg-secondary-container text-on-secondary-container">
@@ -111,7 +111,7 @@
       </div>
       } @else if (store.visibleCount() === 0) {
       <section
-        class="flex min-h-[440px] w-full flex-col items-center justify-center rounded-[0.5rem] bg-surface-container-low p-6 text-center">
+        class="flex min-h-110 w-full flex-col items-center justify-center rounded-lg bg-surface-container-low p-6 text-center">
         <div
           class="mb-4 grid size-16 place-items-center rounded-full bg-surface-container-highest text-on-surface-variant">
           <span class="material-symbols-outlined text-[36px]" aria-hidden="true">search_off</span>
@@ -124,14 +124,14 @@
         <div class="mt-4 flex flex-wrap justify-center gap-2">
           @if (store.appliedSearch()) {
           <button type="button"
-            class="rounded-[0.125rem] bg-surface-container-highest px-4 py-2 text-sm font-semibold hover:bg-surface-variant"
+            class="rounded-xs bg-surface-container-highest px-4 py-2 text-sm font-semibold hover:bg-surface-variant"
             (click)="store.clearSearch()">
             Clear search query
           </button>
           }
           @if (store.typeFilter() !== 'all') {
           <button type="button"
-            class="rounded-[0.125rem] bg-surface-container-highest px-4 py-2 text-sm font-semibold hover:bg-surface-variant"
+            class="rounded-xs bg-surface-container-highest px-4 py-2 text-sm font-semibold hover:bg-surface-variant"
             (click)="store.setType('all')">
             Show all types
           </button>
