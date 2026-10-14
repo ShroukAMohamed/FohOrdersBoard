@@ -1,0 +1,90 @@
+<section class="flex flex-col gap-4 rounded-lg border border-outline-variant/30 bg-surface-container-lowest p-4 shadow-sm md:p-6" [formGroup]="form()">
+  <div class="flex items-center justify-between">
+    <h2 class="flex items-center gap-2 text-lg leading-6 font-semibold">
+      <span class="grid size-6 place-items-center rounded-full bg-primary-fixed font-mono text-xs text-on-primary-fixed">1</span>
+      Order Type
+    </h2>
+    <span class="text-[11px] leading-[14px] font-bold tracking-wider text-error uppercase">Required</span>
+  </div>
+
+  <div class="grid grid-cols-3 gap-1.5 rounded-lg border border-outline-variant/20 bg-surface-container-low p-1.5" role="radiogroup" aria-label="Order type">
+    @for (type of types; track type.id) {
+      <button type="button" role="radio" [attr.aria-checked]="form().controls.type.value === type.id" [class]="typeClass(type.id)" (click)="selectType(type.id)">
+        <span class="material-symbols-outlined text-[18px]" aria-hidden="true">{{ type.icon }}</span>
+        {{ type.label }}
+      </button>
+    }
+  </div>
+
+  <div class="rounded-lg border border-outline-variant/30 bg-surface-container-low/70 p-3 md:p-4">
+    @switch (form().controls.type.value) {
+      @case ('dine-in') {
+        <div class="flex flex-col gap-1.5">
+          <label class="flex items-center justify-between text-sm font-semibold" for="table-number">
+            <span>Table Number <span class="text-error">*</span></span>
+            <span class="font-mono text-xs text-on-surface-variant">Range: 1 – 40</span>
+          </label>
+          <div class="relative flex items-center">
+            <span class="material-symbols-outlined pointer-events-none absolute left-3 text-[20px] text-on-surface-variant" aria-hidden="true">table_restaurant</span>
+            <input
+              id="table-number"
+              type="number"
+              inputmode="numeric"
+              min="1"
+              max="40"
+              step="1"
+              class="w-full rounded-[0.25rem] border border-outline-variant/50 bg-surface-container-lowest py-2.5 pr-4 pl-10 text-sm outline-none focus:ring-2 focus:ring-primary"
+              placeholder="e.g. 14"
+              formControlName="table"
+              [attr.aria-invalid]="showTableError()"
+              [attr.aria-describedby]="showTableError() ? 'table-error' : 'table-hint'"
+            />
+          </div>
+          @if (showTableError()) {
+            <p id="table-error" class="text-xs text-error" role="alert">{{ tableMessage() }}</p>
+          } @else {
+            <p id="table-hint" class="text-xs text-on-surface-variant">Enter a table number between 1 and 40</p>
+          }
+        </div>
+      }
+      @case ('takeaway') {
+        <div class="flex items-center gap-3">
+          <div class="grid size-10 shrink-0 place-items-center rounded-[0.25rem] bg-surface-container-high">
+            <span class="material-symbols-outlined text-[24px]" aria-hidden="true">storefront</span>
+          </div>
+          <div>
+            <p class="text-sm font-semibold">Takeaway Pickup</p>
+            <p class="text-xs text-on-surface-variant">No table or phone number is required for takeaway.</p>
+          </div>
+        </div>
+      }
+      @case ('delivery') {
+        <div class="flex flex-col gap-1.5">
+          <label class="flex flex-wrap items-center justify-between gap-2 text-sm font-semibold" for="mobile-number">
+            <span>Egyptian Mobile Phone <span class="text-error">*</span></span>
+            <span class="rounded-[0.125rem] bg-surface-container-high px-2 py-0.5 font-mono text-xs text-on-surface-variant">01[0,1,2,5]xxxxxxxx</span>
+          </label>
+          <div class="relative flex items-center">
+            <span class="material-symbols-outlined pointer-events-none absolute left-3 text-[20px] text-on-surface-variant" aria-hidden="true">call</span>
+            <input
+              id="mobile-number"
+              type="tel"
+              inputmode="numeric"
+              autocomplete="tel"
+              class="w-full rounded-[0.25rem] border border-outline-variant/50 bg-surface-container-lowest py-2.5 pr-4 pl-10 text-sm outline-none focus:ring-2 focus:ring-primary"
+              placeholder="01012345678"
+              formControlName="phone"
+              [attr.aria-invalid]="showPhoneError()"
+              [attr.aria-describedby]="showPhoneError() ? 'phone-error' : 'phone-hint'"
+            />
+          </div>
+          @if (showPhoneError()) {
+            <p id="phone-error" class="text-xs text-error" role="alert">{{ phoneMessage() }}</p>
+          } @else {
+            <p id="phone-hint" class="text-xs text-on-surface-variant">01 followed by 0, 1, 2, or 5, then 8 digits.</p>
+          }
+        </div>
+      }
+    }
+  </div>
+</section>

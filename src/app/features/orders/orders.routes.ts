@@ -9,7 +9,7 @@ export const ordersRoutes: Routes = [
   {
     path: 'new',
     loadComponent: () =>
-      import('./pages/new-order/new-order.component').then((module) => module.NewOrderComponent),
+      import('./pages/new-order/pages/new-order.component').then((module) => module.NewOrderComponent),
   },
   {
     path: ':id',
