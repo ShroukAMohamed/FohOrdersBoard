@@ -27,6 +27,10 @@ export class OrderItemRowComponent {
     return `item-note-${this.index()}`;
   }
 
+  protected errorId(): string {
+    return `item-error-${this.index()}`;
+  }
+
   protected showMenuError(): boolean {
     const menuId = this.item().controls.menuId;
     return menuId.invalid && menuId.touched;

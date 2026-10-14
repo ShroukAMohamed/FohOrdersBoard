@@ -1,4 +1,5 @@
-<div class="flex flex-col items-stretch gap-3 rounded-lg border border-outline-variant/20 bg-surface-container-low p-3 md:flex-row md:items-center" [formGroup]="item()">
+<div class="flex flex-col gap-1 rounded-lg border border-outline-variant/20 bg-surface-container-low p-3" [formGroup]="item()">
+  <div class="flex flex-col items-stretch gap-3 md:flex-row md:items-start">
   <div class="min-w-0 flex-[2]">
     <label class="mb-1 block text-[11px] leading-[14px] font-semibold tracking-wider text-on-surface-variant uppercase" [attr.for]="menuId()">Menu Item</label>
     <div class="relative text-sm">
@@ -7,6 +8,7 @@
         [id]="menuId()"
         formControlName="menuId"
         [attr.aria-invalid]="showMenuError()"
+        [attr.aria-describedby]="errorId()"
       >
         <option value="">Select a menu item</option>
         @for (entry of menu(); track entry.id) {
@@ -17,9 +19,6 @@
         <path d="M6 8l4 4 4-4" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" />
       </svg>
     </div>
-    @if (showMenuError()) {
-      <p class="mt-1 text-xs text-error" role="alert">Select a menu item.</p>
-    }
   </div>
 
   <div class="w-full shrink-0 md:w-36">
@@ -37,14 +36,12 @@
         [id]="qtyId()"
         formControlName="qty"
         [attr.aria-invalid]="showQtyError()"
+        [attr.aria-describedby]="errorId()"
       />
       <button type="button" class="grid h-11 w-11 shrink-0 place-items-center rounded-r-[0.25rem] text-on-surface-variant hover:bg-surface-container-high" aria-label="Increase quantity" (click)="adjustQty(1)">
         <span class="material-symbols-outlined text-[18px]" aria-hidden="true">add</span>
       </button>
     </div>
-    @if (showQtyError()) {
-      <p class="mt-1 text-xs text-error" role="alert">Enter a whole number from 1 to 20.</p>
-    }
   </div>
 
   <div class="min-w-0 flex-[2]">
@@ -58,9 +55,18 @@
     />
   </div>
 
-  <div class="self-end pt-1 md:self-center md:pt-5">
+  <div class="self-end pt-1 md:self-start md:pt-5">
     <button type="button" class="grid h-11 w-11 shrink-0 place-items-center rounded-[0.25rem] border border-outline-variant/30 bg-surface-container text-on-surface-variant hover:bg-error-container hover:text-on-error-container" [attr.aria-label]="'Remove item ' + (index() + 1)" (click)="remove.emit()">
       <span class="material-symbols-outlined text-[20px]" aria-hidden="true">delete</span>
     </button>
   </div>
+  </div>
+  <p class="flex min-h-4 flex-wrap items-center gap-x-3 text-xs leading-4 text-error" [id]="errorId()" [attr.role]="showMenuError() || showQtyError() ? 'alert' : null">
+    @if (showMenuError()) {
+      <span>Select a menu item.</span>
+    }
+    @if (showQtyError()) {
+      <span>Enter a whole number from 1 to 20.</span>
+    }
+  </p>
 </div>
