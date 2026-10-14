@@ -1,0 +1,46 @@
+@layer theme, base, primeng, utilities;
+
+@import "tailwindcss/theme.css" layer(theme);
+@import "tailwindcss/preflight.css" layer(base);
+@import "tailwindcss/utilities.css" layer(utilities);
+@import "primeicons/primeicons.css";
+
+@theme {
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+
+  --color-canvas: #f8fafc;
+  --color-board: #f1f5f9;
+  --color-ink: #0f172a;
+  --color-ink-muted: #475569;
+  --color-line: #e2e8f0;
+
+  --color-status-new: #2563eb;
+  --color-status-new-surface: #eff6ff;
+  --color-status-new-border: #bfdbfe;
+  --color-status-preparing: #d97706;
+  --color-status-preparing-surface: #fffbeb;
+  --color-status-preparing-border: #fde68a;
+  --color-status-ready: #059669;
+  --color-status-ready-surface: #ecfdf5;
+  --color-status-ready-border: #a7f3d0;
+  --color-status-served: #475569;
+  --color-status-served-surface: #f1f5f9;
+  --color-status-served-border: #cbd5e1;
+  --color-overdue: #dc2626;
+  --color-overdue-surface: #fef2f2;
+  --color-overdue-border: #fecaca;
+
+  --radius-ticket: 0.25rem;
+}
+
+html {
+  color-scheme: light;
+}
+
+body {
+  min-height: 100dvh;
+  background-color: var(--color-canvas);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+}
