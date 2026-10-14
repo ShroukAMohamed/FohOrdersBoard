@@ -2,31 +2,17 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { computed, DestroyRef, inject, Injectable, signal } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ActivatedRoute } from '@angular/router';
-import { catchError, distinctUntilChanged, EMPTY, interval, map, of, startWith, Subject, switchMap } from 'rxjs';
+import { catchError, distinctUntilChanged, EMPTY, forkJoin, interval, map, of, startWith, Subject, switchMap } from 'rxjs';
 
 import { MenuApiService } from '../../../data-access/menu-api.service';
 import { OrdersApiService } from '../../../data-access/orders-api.service';
 import { MenuItem } from '../../../models/menu-item.model';
 import { Order, OrderStatus, OrderType } from '../../../models/order.model';
-import { calculateOrderTotals, PricedOrderLine, priceOrderLines } from '../../../utils/order-calculations';
+import { calculateOrderTotals, formatEgp, PricedOrderLine, priceOrderLines } from '../../../utils/order-calculations';
 import { formatElapsed } from '../../../utils/elapsed-time';
 import { orderItemCount } from '../../../utils/order-board';
-import { isLateOrder, nextOrderStatus } from '../../../utils/order-status';
+import { ACTION_LABEL, isLateOrder, nextOrderStatus, STATUS_LABEL } from '../../../utils/order-status';
 import { NotificationService } from '../../../../../shared/services/notification.service';
-
-const STATUS_LABEL: Record<OrderStatus, string> = {
-  new: 'New',
-  preparing: 'Preparing',
-  ready: 'Ready',
-  served: 'Served',
-};
-
-const ACTION_LABEL: Record<OrderStatus, string | null> = {
-  new: 'Start Preparing',
-  preparing: 'Mark Ready',
-  ready: 'Mark Served',
-  served: null,
-};
 
 const TYPE_LABEL: Record<OrderType, string> = {
   'dine-in': 'Dine-in',
@@ -47,6 +33,7 @@ export interface OrderDetailsTotals {
   serviceCharge: string;
   vat: string;
   grandTotal: string;
+  serviceLabel: string;
   serviceCaption: string;
   vatCaption: string;
 }
@@ -63,7 +50,6 @@ export interface OrderDetailsView {
   elapsedLabel: string;
   late: boolean;
   lines: OrderDetailsLine[];
-  lineCount: number;
   itemCount: number;
   totals: OrderDetailsTotals | null;
   actionLabel: string | null;
@@ -132,7 +118,9 @@ export class OrderDetailsStore {
       .subscribe({
         next: (saved) => {
           this.advancing.set(false);
-          this.order.set(saved);
+          if (this.order()?.id === saved.id) {
+            this.order.set(saved);
+          }
         },
         error: () => {
           this.advancing.set(false);
@@ -162,8 +150,7 @@ export class OrderDetailsStore {
       return of(undefined);
     }
 
-    return this.ordersApi.getOrder(id).pipe(
-      switchMap((order) => this.menuApi.getMenu().pipe(map((menu) => ({ order, menu })))),
+    return forkJoin({ order: this.ordersApi.getOrder(id), menu: this.menuApi.getMenu() }).pipe(
       map(({ order, menu }) => {
         this.order.set(order);
         this.menu.set(menu);
@@ -213,7 +200,6 @@ export class OrderDetailsStore {
         unitPriceLabel: line.unitPrice === null ? 'Price unavailable' : formatEgp(line.unitPrice),
         lineTotalLabel: line.lineTotal === null ? 'Price unavailable' : formatEgp(line.lineTotal),
       })),
-      lineCount: priced.length,
       itemCount: orderItemCount(order.items),
       totals: totals ? formatTotals(order.type, totals) : null,
       actionLabel: ACTION_LABEL[order.status],
@@ -239,13 +225,10 @@ function formatTotals(type: OrderType, totals: ReturnType<typeof calculateOrderT
     serviceCharge: formatEgp(totals.serviceCharge),
     vat: formatEgp(totals.vat),
     grandTotal: formatEgp(totals.grandTotal),
+    serviceLabel: type === 'dine-in' ? 'Service Charge (12%)' : 'Service Charge',
     serviceCaption: type === 'dine-in' ? '12% Dine-in service rate' : 'No service charge for this order type',
     vatCaption: `14% VAT on ${formatEgp(vatBase)} (Subtotal + Service)`,
   };
-}
-
-function formatEgp(amount: number): string {
-  return `EGP ${amount.toFixed(2)}`;
 }
 
 function formatCreatedAt(createdAt: string): string {

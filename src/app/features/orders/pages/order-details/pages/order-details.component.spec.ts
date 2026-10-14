@@ -103,6 +103,8 @@ describe('OrderDetailsComponent', () => {
     expect(text()).toContain('EGP 54.00');
     expect(text()).toContain('EGP 70.56');
     expect(text()).toContain('EGP 574.56');
+    expect(text()).toContain('4 items');
+    expect(text()).toContain('Service Charge (12%)');
     expect(text()).toContain('12% Dine-in service rate');
     expect(text()).toContain('Mark Ready');
     expect(text()).not.toContain('Fresh Mango Juice note');
@@ -121,6 +123,7 @@ describe('OrderDetailsComponent', () => {
     expect(text()).toContain('EGP 33.60');
     expect(text()).toContain('EGP 273.60');
     expect(text()).toContain('No service charge for this order type');
+    expect(text()).not.toContain('Service Charge (12%)');
     expect(text()).toContain('Start Preparing');
     expect(text()).toContain('warm');
   });
@@ -255,6 +258,22 @@ describe('OrderDetailsComponent', () => {
     expect(text()).toContain('Loading order');
     expect(text()).not.toContain('Order #1041');
     expect(text()).not.toContain('EGP 574.56');
+  });
+
+  it('does not let a late status response replace a different order', () => {
+    const patch = new Subject<Order>();
+    updateStatus.mockReturnValue(patch.asObservable());
+    create();
+    (fixture.nativeElement.querySelector('button') as HTMLButtonElement).click();
+
+    getOrder.mockReturnValue(of(delivery));
+    params.next(convertToParamMap({ id: '1044' }));
+    patch.next({ ...dineIn, status: 'ready' });
+    patch.complete();
+    fixture.detectChanges();
+
+    expect(text()).toContain('Order #1044');
+    expect(text()).not.toContain('Order #1041');
   });
 
   it('ignores a status response after the page is destroyed', () => {

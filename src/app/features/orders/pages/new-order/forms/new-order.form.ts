@@ -2,7 +2,7 @@ import { AbstractControl, FormArray, FormControl, FormGroup, ValidationErrors, V
 
 import { MenuItem } from '../../../models/menu-item.model';
 import { CreateOrderRequest, Order, OrderLine, OrderType } from '../../../models/order.model';
-import { calculateOrderTotals } from '../../../utils/order-calculations';
+import { calculateOrderTotals, formatEgp } from '../../../utils/order-calculations';
 import { egyptianMobileValidator } from '../../../utils/egyptian-mobile.validator';
 
 export interface NewOrderItemForm {
@@ -162,8 +162,4 @@ function serviceCaption(type: OrderType): string {
     return 'Takeaway order: Service charge (0%) waived.';
   }
   return 'Delivery order: Service charge (0%) waived. Mobile required.';
-}
-
-function formatEgp(amount: number): string {
-  return `EGP ${amount.toFixed(2)}`;
 }

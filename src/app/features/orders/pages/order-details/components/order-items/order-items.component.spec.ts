@@ -24,7 +24,7 @@ describe('OrderItemsComponent', () => {
   it('keeps the mobile cards and desktop table mutually exclusive and shows notes only when present', () => {
     const fixture = TestBed.createComponent(OrderItemsComponent);
     fixture.componentRef.setInput('lines', lines);
-    fixture.componentRef.setInput('lineCount', lines.length);
+    fixture.componentRef.setInput('itemCount', 4);
     fixture.detectChanges();
 
     const list = fixture.nativeElement.querySelector('ul') as HTMLElement;
@@ -35,7 +35,7 @@ describe('OrderItemsComponent', () => {
     expect(list.className).not.toContain('md:block');
     expect(tableWrap.className).toContain('hidden');
     expect(tableWrap.className).toContain('md:block');
-    expect(fixture.nativeElement.textContent).toContain('2 items');
+    expect(fixture.nativeElement.textContent).toContain('4 items');
     expect(fixture.nativeElement.textContent).toContain('no garlic sauce');
     expect(fixture.nativeElement.textContent).toContain('EGP 330.00');
     expect(list.textContent).not.toContain('Fresh Mango Juice note');

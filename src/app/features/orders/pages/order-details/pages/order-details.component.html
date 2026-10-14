@@ -59,7 +59,7 @@
       <app-order-overview [detail]="detail" [advancing]="store.advancing()" (advance)="store.advance()" />
 
       <div class="grid grid-cols-1 items-start gap-6 lg:grid-cols-3">
-        <app-order-items [lines]="detail.lines" [lineCount]="detail.lineCount" />
+        <app-order-items [lines]="detail.lines" [itemCount]="detail.itemCount" />
         <app-order-financial-summary [totals]="detail.totals" />
       </div>
       }

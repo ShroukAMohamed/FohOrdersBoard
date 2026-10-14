@@ -8,6 +8,7 @@ const totals: OrderDetailsTotals = {
   serviceCharge: 'EGP 54.00',
   vat: 'EGP 70.56',
   grandTotal: 'EGP 574.56',
+  serviceLabel: 'Service Charge (12%)',
   serviceCaption: '12% Dine-in service rate',
   vatCaption: '14% VAT on EGP 504.00 (Subtotal + Service)',
 };

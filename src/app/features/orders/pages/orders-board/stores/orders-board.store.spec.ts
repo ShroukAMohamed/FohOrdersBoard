@@ -328,4 +328,27 @@ describe('OrdersBoardStore', () => {
     expect(store.loadError()).toBeNull();
     vi.useRealTimers();
   });
+
+  it('toasts once per outage instead of on every failed refresh', async () => {
+    vi.useFakeTimers();
+    getOrders
+      .mockReturnValueOnce(of([preparing]))
+      .mockReturnValueOnce(throwError(() => new Error('down')))
+      .mockReturnValueOnce(throwError(() => new Error('down')))
+      .mockReturnValueOnce(of([preparing]))
+      .mockReturnValue(throwError(() => new Error('down')));
+    const add = vi.spyOn(TestBed.inject(MessageService), 'add');
+    const store = createStore();
+
+    await vi.advanceTimersByTimeAsync(30_000);
+    expect(add).toHaveBeenCalledTimes(1);
+    expect(add).toHaveBeenCalledWith(expect.objectContaining({ severity: 'warn', summary: 'Refresh failed' }));
+
+    await vi.advanceTimersByTimeAsync(15_000);
+    expect(store.refreshWarning()).toBeNull();
+
+    await vi.advanceTimersByTimeAsync(15_000);
+    expect(add).toHaveBeenCalledTimes(2);
+    vi.useRealTimers();
+  });
 });

@@ -33,6 +33,10 @@ function toPounds(piasters: number): number {
   return piasters / 100;
 }
 
+export function formatEgp(amount: number): string {
+  return `EGP ${amount.toFixed(2)}`;
+}
+
 export function priceOrderLines(items: readonly OrderLine[], menu: readonly MenuItem[]): PricedOrderLine[] {
   const menuById = new Map(menu.map((item) => [item.id, item]));
 

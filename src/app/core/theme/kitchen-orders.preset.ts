@@ -1,11 +1,14 @@
 import { definePreset } from '@primeuix/themes';
-import Aura from '@primeuix/themes/aura';
+import AuraBase from '@primeuix/themes/aura/base';
+import skeleton from '@primeuix/themes/aura/skeleton';
+import toast from '@primeuix/themes/aura/toast';
 
 /**
  * Light Aura preset aligned with the Kitchen Orders Board design.
  * PrimeNG paints `primary.color` from shade 500, so that shade is Blue 600 (#2563eb).
+ * Only the components the app renders are included; add a component's Aura tokens here before using it.
  */
-export const kitchenOrdersPreset = definePreset(Aura, {
+export const kitchenOrdersPreset = definePreset({ ...AuraBase, components: { skeleton, toast } }, {
   semantic: {
     primary: {
       50: '{blue.50}',

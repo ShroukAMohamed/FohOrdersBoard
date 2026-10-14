@@ -9,25 +9,12 @@ import { MenuApiService } from '../../../data-access/menu-api.service';
 import { OrdersApiService } from '../../../data-access/orders-api.service';
 import { formatElapsed } from '../../../utils/elapsed-time';
 import { orderBoardSubtotal, orderItemCount, orderMatchesSearch, orderPlaceLabel } from '../../../utils/order-board';
-import { isLateOrder, nextOrderStatus } from '../../../utils/order-status';
+import { formatEgp } from '../../../utils/order-calculations';
+import { ACTION_LABEL, isLateOrder, nextOrderStatus, STATUS_LABEL } from '../../../utils/order-status';
 import { NotificationService } from '../../../../../shared/services/notification.service';
 
 const POLL_INTERVAL_MS = 15_000;
 const SEARCH_DEBOUNCE_MS = 300;
-
-const STATUS_LABEL: Record<OrderStatus, string> = {
-  new: 'New',
-  preparing: 'Preparing',
-  ready: 'Ready',
-  served: 'Served',
-};
-
-const ACTION_LABEL: Record<OrderStatus, string | null> = {
-  new: 'Start Preparing',
-  preparing: 'Mark Ready',
-  ready: 'Mark Served',
-  served: null,
-};
 
 const EMPTY_COPY: Record<OrderStatus, { title: string; body: string }> = {
   new: { title: 'No new orders', body: 'Waiting for incoming tickets' },
@@ -305,8 +292,10 @@ export class OrdersBoardStore {
           this.ordersApi.getOrders().pipe(
             catchError(() => {
               const message = 'Could not refresh orders. Showing the last successful update.';
+              if (this.refreshWarning() === null) {
+                this.notifications.warn(message, 'Refresh failed');
+              }
               this.refreshWarning.set(message);
-              this.notifications.warn(message, 'Refresh failed');
               return of(null);
             }),
           ),
@@ -386,7 +375,7 @@ export class OrdersBoardStore {
       status: order.status,
       placeLabel: orderPlaceLabel(order),
       itemCount: orderItemCount(order.items),
-      subtotalLabel: subtotal === null ? 'Price unavailable' : `EGP ${subtotal.toFixed(2)}`,
+      subtotalLabel: subtotal === null ? 'Price unavailable' : formatEgp(subtotal),
       elapsedLabel,
       lateLabel: late ? `Late (${elapsedLabel})` : null,
       actionLabel: ACTION_LABEL[order.status],

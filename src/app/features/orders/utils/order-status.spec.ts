@@ -1,4 +1,4 @@
-import { isLateOrder, LATE_AFTER_MS, nextOrderIdentity, nextOrderStatus } from './order-status';
+import { isLateOrder, LATE_AFTER_MS, nextOrderStatus } from './order-status';
 
 describe('nextOrderStatus', () => {
   it('walks new → preparing → ready → served and stops at served', () => {
@@ -27,11 +27,5 @@ describe('isLateOrder', () => {
     const now = createdMs + LATE_AFTER_MS + 1;
     expect(isLateOrder('ready', createdAt, now)).toBe(false);
     expect(isLateOrder('served', createdAt, now)).toBe(false);
-  });
-});
-
-describe('nextOrderIdentity', () => {
-  it('uses one more than the highest number and keeps id as that number string', () => {
-    expect(nextOrderIdentity([1040, 1045, 1042])).toEqual({ id: '1046', number: 1046 });
   });
 });

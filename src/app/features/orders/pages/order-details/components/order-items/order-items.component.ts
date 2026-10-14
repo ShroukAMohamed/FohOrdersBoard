@@ -9,5 +9,5 @@ import { OrderDetailsLine } from '../../stores/order-details.store';
 })
 export class OrderItemsComponent {
   readonly lines = input.required<readonly OrderDetailsLine[]>();
-  readonly lineCount = input.required<number>();
+  readonly itemCount = input.required<number>();
 }
