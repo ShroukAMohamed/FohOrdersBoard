@@ -4,7 +4,7 @@ export const ordersRoutes: Routes = [
   {
     path: '',
     loadComponent: () =>
-      import('./pages/orders-board/orders-board.component').then((module) => module.OrdersBoardComponent),
+      import('./pages/orders-board/pages/orders-board.component').then((module) => module.OrdersBoardComponent),
   },
   {
     path: 'new',
