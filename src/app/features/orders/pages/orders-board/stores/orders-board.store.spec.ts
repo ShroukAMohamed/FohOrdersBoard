@@ -217,6 +217,24 @@ describe('OrdersBoardStore', () => {
     expect(getMenu).toHaveBeenCalledTimes(1);
   });
 
+  it('keeps a pending order that disappeared from the poll response', async () => {
+    vi.useFakeTimers();
+    const poll = new Subject<Order[]>();
+    const patch = new Subject<Order>();
+    getOrders.mockReturnValueOnce(of([preparing])).mockReturnValue(poll.asObservable());
+    updateStatus.mockReturnValue(patch.asObservable());
+    const store = createStore();
+
+    await vi.advanceTimersByTimeAsync(15_000);
+    store.advance(preparing.id);
+    expect(statusOf(store, preparing.id)).toBe('ready');
+
+    poll.next([]);
+    poll.complete();
+    expect(statusOf(store, preparing.id)).toBe('ready');
+    vi.useRealTimers();
+  });
+
   it('keeps an in-flight status when a poll returns the old status', async () => {
     vi.useFakeTimers();
     const poll = new Subject<Order[]>();

@@ -1,4 +1,4 @@
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
 import { Observable } from 'rxjs';
 
@@ -10,9 +10,8 @@ export class OrdersApiService {
   private readonly http = inject(HttpClient);
   private readonly ordersUrl = `${API_BASE_URL}/orders`;
 
-  getOrders(status?: OrderStatus): Observable<Order[]> {
-    const params = status ? new HttpParams().set('status', status) : undefined;
-    return this.http.get<Order[]>(this.ordersUrl, { params });
+  getOrders(): Observable<Order[]> {
+    return this.http.get<Order[]>(this.ordersUrl);
   }
 
   getOrder(id: string): Observable<Order> {

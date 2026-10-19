@@ -192,7 +192,6 @@ Base URL: `http://localhost:3000`
 ```text
 GET    /menu
 GET    /orders
-GET    /orders?status=new
 GET    /orders/:id
 PATCH  /orders/:id     { "status": "ready" }
 POST   /orders          the CreateOrderRequest body

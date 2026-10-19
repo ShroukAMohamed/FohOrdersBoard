@@ -40,14 +40,6 @@ describe('OrdersApiService', () => {
     request.flush([order]);
   });
 
-  it('filters by status when one is given', () => {
-    service.getOrders('new').subscribe();
-
-    const request = http.expectOne('http://localhost:3000/orders?status=new');
-    expect(request.request.method).toBe('GET');
-    request.flush([]);
-  });
-
   it('loads one order by id', () => {
     service.getOrder('1041').subscribe((result) => expect(result).toEqual(order));
 

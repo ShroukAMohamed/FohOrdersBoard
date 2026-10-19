@@ -1,0 +1,30 @@
+<section
+  class="flex min-h-110 w-full flex-col items-center justify-center rounded-lg bg-surface-container-low p-6 text-center"
+  [attr.role]="variant() === 'error' ? 'alert' : null">
+  <div [class]="iconShellClass()">
+    <span class="material-symbols-outlined text-[36px]" aria-hidden="true">{{ icon() }}</span>
+  </div>
+  <h2 class="text-2xl leading-8 font-bold">{{ title() }}</h2>
+  <p class="mt-1 max-w-md text-sm text-on-surface-variant">
+    @if (highlight(); as value) {
+    {{ message() }} '<span class="font-mono font-semibold text-on-surface">{{ value }}</span>'.
+    } @else {
+    {{ message() }}
+    }
+  </p>
+  @if (actions().length > 0) {
+  <div [class]="actionsClass()">
+    @for (item of actions(); track item.id) {
+    <button pButton type="button" [pButton]="{
+        severity: (item.tone ?? 'neutral') === 'danger' ? 'danger' : undefined,
+        styleClass: actionStyleClass(item)
+      }" (click)="onAction(item.id)">
+      @if (item.icon) {
+      <span class="material-symbols-outlined text-[20px]" aria-hidden="true">{{ item.icon }}</span>
+      }
+      {{ item.label }}
+    </button>
+    }
+  </div>
+  }
+</section>

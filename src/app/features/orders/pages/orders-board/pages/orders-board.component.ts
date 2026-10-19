@@ -1,6 +1,10 @@
-import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, inject } from '@angular/core';
 import { ButtonDirective } from 'primeng/button';
 
+import {
+  FeedbackAction,
+  FeedbackStateComponent,
+} from '../../../../../shared/components/feedback-state/feedback-state.component';
 import { BoardColumnSkeletonComponent } from '../../../../../shared/components/loading-state/board-column-skeleton/board-column-skeleton.component';
 import { OrderColumnComponent } from '../components/order-column/order-column.component';
 import { BoardTypeFilter, OrdersBoardStore } from '../stores/orders-board.store';
@@ -8,7 +12,7 @@ import { BoardTypeFilter, OrdersBoardStore } from '../stores/orders-board.store'
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
   selector: 'app-orders-board',
-  imports: [ButtonDirective, OrderColumnComponent, BoardColumnSkeletonComponent],
+  imports: [ButtonDirective, FeedbackStateComponent, OrderColumnComponent, BoardColumnSkeletonComponent],
   providers: [OrdersBoardStore],
   templateUrl: './orders-board.component.html',
 })
@@ -21,6 +25,19 @@ export class OrdersBoardComponent {
     { id: 'takeaway', label: 'Takeaway' },
     { id: 'delivery', label: 'Delivery' },
   ];
+  protected readonly errorActions: readonly FeedbackAction[] = [
+    { id: 'retry', label: 'Retry Connection', icon: 'refresh', tone: 'danger' },
+  ];
+  protected readonly emptyActions = computed((): FeedbackAction[] => {
+    const actions: FeedbackAction[] = [];
+    if (this.store.appliedSearch()) {
+      actions.push({ id: 'clear-search', label: 'Clear search query', tone: 'neutral' });
+    }
+    if (this.store.typeFilter() !== 'all') {
+      actions.push({ id: 'show-all', label: 'Show all types', tone: 'neutral' });
+    }
+    return actions;
+  });
 
   protected onSearch(event: Event): void {
     const target = event.target;
@@ -28,5 +45,19 @@ export class OrdersBoardComponent {
       return;
     }
     this.store.setSearchDraft(target.value);
+  }
+
+  protected onFeedbackAction(actionId: string): void {
+    switch (actionId) {
+      case 'retry':
+        this.store.load();
+        break;
+      case 'clear-search':
+        this.store.clearSearch();
+        break;
+      case 'show-all':
+        this.store.setType('all');
+        break;
+    }
   }
 }
